@@ -36,7 +36,7 @@ Meiosis specific =
 ### 1. Functional annotation tools: 
 bash eggnog + interpro
 
-R 
+scRNAseq_Annotations.Rmd
 
 ### 2. HMM profile search: 
 bash
