@@ -31,10 +31,6 @@ Gamete specific =
 Meiosis specific =
 
 
-## Next steps
-
-Building a phylogenetic tree of identified genes and validating radiolarian specific marker genes of the sexual cycle (SexCy markers). 
-
 ## Scripts
 
 ### 1. Functional annotation tools: 
@@ -48,3 +44,8 @@ bash
 R
 
 ### 3. Blast identified gene reads on reference protist genes: 
+
+
+## Next steps
+
+Building a phylogenetic tree of identified genes and validating radiolarian specific marker genes of the sexual cycle (SexCy markers). 
