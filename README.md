@@ -9,15 +9,18 @@ The present github includes the code for identifying reference protist genes spe
 
 ![Graphical](Fig1_A.png)
 
-## Method
+## Methods
 
-1. Functional annotation tools: EggNog, Interproscan
-
-
-3. HMM profile search (peptidome data)
+### 1. Functional annotation tools: 
+EggNog, Interproscan
 
 
-5. Blast identified gene reads on reference protist genes (transcriptome data)
+### 2. HMM profile search: 
+Peptidome data
+
+
+### 3. Blast identified gene reads on reference protist genes: 
+Transcriptome data
 
 
 ## Reference protist genes
@@ -34,4 +37,14 @@ Building a phylogenetic tree of identified genes and validating radiolarian spec
 
 ## Scripts
 
+### 1. Functional annotation tools: 
+bash eggnog + interpro
 
+R 
+
+### 2. HMM profile search: 
+bash
+
+R
+
+### 3. Blast identified gene reads on reference protist genes: 
