@@ -25,10 +25,10 @@ Transcriptome data
 
 ## Reference protist genes
 
-Gamete specific =
+Gamete specific = 
 
 
-Meiosis specific =
+Meiosis specific = 36
 
 
 ## Scripts
