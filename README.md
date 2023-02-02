@@ -9,8 +9,18 @@ The present github includes the code for identifying reference protist genes spe
 
 ![Graphical](Fig1_A.png)
 
+## Method
 
-## Targeted genes
+1. Functional annotation tools: EggNog, Interproscan
+
+
+3. HMM profile search (peptidome data)
+
+
+5. Blast identified gene reads on reference protist genes (transcriptome data)
+
+
+## Reference protist genes
 
 Gamete specific =
 
@@ -21,3 +31,7 @@ Meiosis specific =
 ## Next steps
 
 Building a phylogenetic tree of identified genes and validating radiolarian specific marker genes of the sexual cycle (SexCy markers). 
+
+## Scripts
+
+
