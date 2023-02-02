@@ -5,7 +5,7 @@ From a genetic point of view, sexual processes seem to have arosen early in the 
 
 For Rhizaria that are a tedious lineage to cultivate, genetic cues can help understand the reproductive mechanisms involved in their mysterious life cycle. Sexual reproduction has been observed among some cultivable rhizarian lineages (Phytomyxea and benthic Foraminifera) but remains enigmatic for Radiolaria. The existence of a sexual cycle has long been speculated, notably by Schewiakoff ~100 years ago. Since then, the lifespan, ploidy and role of each radiolarian life stage observed on the field remain to be resolved.
 
-The present github includes the code for identifying reference protist genes specific to gamete and meiotic life stages in single-cell transcriptomes of Radiolaria.
+The present github includes the code for identifying reference protist genes specific to gamete and meiotic life stages based on single-cell transcriptomes of Radiolaria.
 
 ![Graphical](Fig1_A.png)
 
