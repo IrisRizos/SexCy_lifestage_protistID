@@ -9,6 +9,8 @@
 
 # Search for conserved domains of gamete specific and meiosis specific protist genes among radiolarian single-cell life stages
 
+module load hmmer/3.2.1
+
 # SPB-44
 hmmsearch HMM_search_gamete_ref.hmm /shared/projects/swarmer_radiolaria/finalresult/peptidomes/TransDecoder_on_hf44_Results_PEP.fasta > hmm_gamete_44_071022.out
 hmmsearch HMM_search_meiosis_ref.hmm /shared/projects/swarmer_radiolaria/finalresult/peptidomes/TransDecoder_on_hf44_Results_PEP.fasta > hmm_meiosis_44_071022.out
