@@ -25,7 +25,7 @@ Transcriptome data
 
 ## Reference protist genes
 
-Gamete specific = 
+Gamete specific = 10
 
 
 Meiosis specific = 36
