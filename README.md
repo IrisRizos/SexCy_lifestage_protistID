@@ -26,10 +26,29 @@ Transcriptome data
 ## Reference protist genes
 
 Gamete related = 11
-among which 10 gamete specific
+among which 10 gamete specific =
 
-Meiosis related = 34
-among which X meiosis specific 
+Meiosis related = 33
+among which X meiosis specific =
+
+
+## Life stages
+
+The radiolarian life stages studied here are:
+
+-Swarmer: hypothetical gamete stage 
+The expression of gamete reference genes is investigated among 4 single-cell swarmer transcriptomes of 3 acantharian and 1 collodarian species.
+
+-Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
+
+Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
+--Vegetative swarming: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
+Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species
+
+--Cyst swarming: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
+Samples include 2 acantharian species among which one also undergone vegetative swarming (i.e. one of the acantharian swarmer samples)
+
+Both the expression of meiosis and gamete reference genes is investigated as the presence of swarmers inside the cell is suspected.
 
 
 ## Scripts
@@ -37,12 +56,13 @@ among which X meiosis specific
 ### 1. Functional annotation tools: 
 bash eggnog + interpro
 
-scRNAseq_Annotations.Rmd
+scRNA_FuAnnotations.Rmd
 
 ### 2. HMM profile search: 
 bash
 
-R
+scRNA_HMM.Rmd
+
 
 ### 3. Blast identified gene reads on reference protist genes: 
 
