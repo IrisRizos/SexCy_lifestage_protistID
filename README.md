@@ -11,16 +11,27 @@ The present github includes the code for identifying reference protist genes spe
 
 ## Methods
 
-### 1. Functional annotation tools: 
+### 1. Target-gene approach
+
+#### 1.1 Functional annotation tools: 
 EggNog, Interproscan
 
 
-### 2. HMM profile search: 
+#### 1.2 HMM profile search: 
 Peptidome data
 
 
-### 3. Blast identified gene reads on reference protist genes: 
+#### 1.3 Blast identified gene reads on reference protist genes: 
 Transcriptome data
+
+
+### 2. Comparative approach
+
+#### 2.1 Creating clusters of ortholog genes:
+Orthofinder
+
+#### 2.2 Phylogenetic relationships of sexual genes:
+Are the gene trees and species tree congruent ?
 
 
 ## Reference protist genes
@@ -68,6 +79,12 @@ scRNA_HMM.Rmd
 
 
 ### 3. Blast identified gene reads on reference protist genes: 
+
+
+### 4. Orthofinder: 
+
+
+### 5. Phylogenetic reconstructions: 
 
 
 ## Next steps
