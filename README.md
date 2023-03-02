@@ -20,6 +20,33 @@ EggNog, Interproscan
 #### 1.2 HMM profile search: 
 Peptidome data
 
+````
+#!/bin/sh
+#
+#SBATCH --job-name hmmsearch
+#SBATCH --cpus-per-task=4
+#SBATCH -o o.hmmS
+#SBATCH -e e.hmmS
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+today=$(date +%F)
+
+# Run by life stage
+
+for f in /shared/projects/rhizaria_ref/Sexual_cycle/adult/*/*;
+do
+    hmmsearch HMM_search_gamete_ref.hmm ${f} > adult/hmm_gamete_${f##*/}_${today}.out
+    hmmsearch HMM_search_meiosis_ref.hmm ${f} > adult/hmm_meiosis_${f##*/}_${today}.out
+done
+
+for f in /shared/projects/rhizaria_ref/Sexual_cycle/swarmer/*/*;
+do
+    hmmsearch HMM_search_gamete_ref.hmm ${f} > swarmer/hmm_gamete_${f##*/}_${today}.out
+    hmmsearch HMM_search_meiosis_ref.hmm ${f} > swarmer/hmm_meiosis_${f##*/}_${today}.out
+done
+
+````
 
 #### 1.3 Blast identified gene reads on reference protist genes: 
 Transcriptome data
