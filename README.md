@@ -218,7 +218,7 @@ fasta_folders.sh
 
 scRNA_HMM.Rmd
 
-
+![Graphical](HMM_heatmap_overview.png)
 
 ### 3. Blast identified gene reads on reference protist genes: 
 
