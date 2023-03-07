@@ -56,6 +56,8 @@ Headers contain the query id with which the node significantly blasted (eval < 0
 The following script allows to convert alignements in stockholm format to the fasta file described above.
 For that the use of easel miniapps implemented in HMMER is necessary (http://cryptogenomicon.org/extracting-hmmer-results-to-sequence-files-easel-miniapplications.html).
 
+This script is applied to swarmer transcriptome data. The equivalent script is applied to each life stage by changing the working directory.
+
 ````
 #!/bin/sh
 #
@@ -119,6 +121,35 @@ done
 ##
 ````
 
+After the fasta sequences have been gathered, they are reorganised by query protein id. Transcripts from different transcriptomes and life stages are grouped together based on the meiosis and gamete query ids with the following script:
+
+````
+#!/bin/sh
+#
+#SBATCH --job-name fasta_by_id
+#SBATCH --cpus-per-task=2
+#SBATCH -o o.fasta
+#SBATCH -e e.fasta
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# Create separate folders for storing transcripts by hmm query
+for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/final*.fasta;
+do
+   echo "looping 1 "${f##*/}""
+   for i in $(cat gamete_query_ids.txt);
+    do
+      echo "im in the loop 2"
+      query=$(echo $i | cut -f1)
+      echo "$query"
+      tr -d "\n" < ${f} | sed 's/-06/-06\//g' | sed 's/>/\n>/g' | awk -v var1="$query" '/^>/ {print ">"var1"/"$0}' | awk -F "/" '{if ($1==$2) {print $2"/"$3"/"$4"\n"$5}}' >> gamete_folder_id/${query}.fasta
+   done
+done
+##
+````
+
+These output files are the basis of multiple sequence alignemnts and phylogenetic gene trees reconstructions (cf. 2.2).
+
 #### 1.3 Blast identified gene reads on reference protist genes: 
 Transcriptome data
 
@@ -128,14 +159,17 @@ Transcriptome data
 #### 2.1 Creating clusters of ortholog genes:
 Orthofinder
 
+
 #### 2.2 Phylogenetic relationships of sexual genes:
 Are the gene trees and species tree congruent ?
 
 
 ## Reference protist genes
 
-Gamete related = 11
-among which 10 gamete specific =
+Gamete related = 10 (cf. table X)
+CFA20, macA, HAP2-GCS1, Fus1, GEX2, KAR5, Fus2, MATa1, SAM, MatA
+
+among which 10 gamete specific = all except CFA20
 
 Meiosis related = 33
 among which X meiosis specific =
@@ -171,9 +205,19 @@ bash eggnog + interpro
 scRNA_FuAnnotations.Rmd
 
 ### 2. HMM profile search: 
-bash
+
+* Analysis:
+
+HMM_search.sh
+
+hmm_fasta_convert_{lifestage}.sh
+
+fasta_folders.sh
+
+* Graphical outputs:
 
 scRNA_HMM.Rmd
+
 
 
 ### 3. Blast identified gene reads on reference protist genes: 
