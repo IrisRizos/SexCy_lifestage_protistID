@@ -234,6 +234,33 @@ scRNA_HMM.Rmd
 
 ### 5. Phylogenetic reconstructions: 
 
+#### Species Tree
+Recovery of rRNA sequences in transcriptomes:
+````
+#!/bin/sh
+#
+#SBATCH --job-name rrna_recovery
+#SBATCH --cpus-per-task=2
+#SBATCH -o o.rrna
+#SBATCH -e e.rrna
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# For every eukaryotic fasta file
+for f in /shared/projects/swarmer_radiolaria/finalresult/rrna/*euk*.fasta;
+do
+   echo "looping 1 "${f##*/}""
+   id=${f##*/}
+   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "18S_rRNA" | sed 's/.fasta/\n/g' >> 18S_rRNA.fasta
+   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "28S_rRNA" | sed 's/.fasta/\n/g' >> 28S_rRNA.fasta
+   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "5_8S_rRNA" | sed 's/.fasta/\n/g' >> 5_8S_rRNA.fasta
+   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "5S_rRNA" | sed 's/.fasta/\n/g' >> 5_8S_rRNA.fasta
+done
+##
+
+````
+
+#### Genes Tree
 
 ## Next steps
 
