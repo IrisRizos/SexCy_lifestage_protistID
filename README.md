@@ -192,11 +192,11 @@ The expression of gamete reference genes is investigated among 4 single-cell swa
 
 Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
 
---Vegetative swarming: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
+*Vegetative swarming*: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
 
 Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species.
 
---Cyst swarming: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
+*Cyst swarming*: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
 
 Samples include 2 acantharian species among which one also undergone vegetative swarming (i.e. one of the acantharian swarmer samples).
 
