@@ -18,6 +18,42 @@ EggNog, Interproscan
 
 
 #### 1.2 HMM profile search: 
+Get size of transcriptome for each lifestage: node_count.sh
+
+````
+#!/bin/sh
+#
+#SBATCH --job-name bash
+#SBATCH --cpus-per-task=2
+#SBATCH -o o.bash
+#SBATCH -e e.bash
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# Get number of predicted genes for each transcriptome
+# Swarmer
+for f in /shared/projects/rhizaria_ref/Sexual_cycle/meiosis_swarmer/*/*;
+do
+   nb_node=$(echo | grep -c ">" ${f})
+   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/node_count_MESW.csv
+done
+
+# Cyst
+for f in /shared/projects/rhizaria_ref/Sexual_cycle/cyst/*;
+do
+   nb_node=$(echo | grep -c ">" ${f})
+   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_count_CY.csv
+done
+
+# Adult
+for f in /shared/projects/rhizaria_ref/Sexual_cycle/adult/*/*;
+do
+   nb_node=$(echo | grep -c ">" ${f})
+   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_count_VE.csv
+done
+##
+````
+
 Peptidome data
 
 ````
@@ -156,6 +192,7 @@ done
 
 These output files are the basis of multiple sequence alignemnts and phylogenetic gene trees reconstructions (cf. 2.2).
 
+
 #### 1.3 Blast identified gene reads on reference protist genes: 
 Transcriptome data
 
@@ -221,6 +258,123 @@ hmm_fasta_convert_{lifestage}.sh
 fasta_folders.sh
 
 * Graphical outputs:
+hmm_graphics_1.sh
+
+Get eval for each alignment.
+
+````
+#!/bin/sh
+#
+#SBATCH --job-name bash
+#SBATCH --cpus-per-task=2
+#SBATCH -o o.bash
+#SBATCH -e e.bash
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# Add query id to each target sequence significantly aligned (to its query) and alignement score
+cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/
+for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
+do
+   id_name=$(echo "${f##*/}")
+   echo "$id_name"
+   refpr=$(echo $id_name | cut -d'_' -f2)
+   echo "$refpr"
+   sed 's/  */ /g' ${f} | awk -v name="$id_name" -v ref="$refpr" -F " " '/^N/ {print$1";"$4";"$27";"name";swarmer;"ref}' | sed 's/(+),score=//g' | sed 's/(-),score=//g' | uniq >> graphics/node_query_score.csv
+done
+
+cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/
+awk -F";" '$4 ~/soft/ || $4 ~/S/ {print$0";S"} ; $4 !~/soft/ && $4 !~/S/ && $4 !~/hf/ && $4 !~/H/ && $4 !~/hard/ {print$0";T"} ; $4 ~/hard/ || $4 ~/H/ || $4 ~/hf/ {print$0";H"}' node_query_score.csv > node_query_score_2.csv
+awk -F";" '$4 ~/hf44/ {print$0";A1_Vi_SW"} ; $4 ~/hf45/ {print$0";A2_Vi_SW"} ; $4 ~/hf46/ {print$0";A3_Vi_SW"} ; $4 ~/E561/ {print$0";A4_Vi_CY"} ; $4 ~/E587/ {print$0";A2_Vi_CY"} ; $4 ~/M345/ {print$0";F1_Mo_MESW"}  ; $4 ~/M357/ {print$0";C1_Mo_SW"} ; $4 ~/M380/ {print$0";A5_Mo_ME"} ; $4 ~/SP22/ {print$0";A5_Vi_ME"}' node_query_score_2.csv > node_query_score_3.csv
+awk -F";" '{OFS = FS} $8 ~/ME/ {$5="meiosis"} ; {print$0}' node_query_score_3.csv > node_query_score_4.csv
+##
+````
+
+hmm_graphics_2.sh
+
+Get eval, accuracy, number of hits per query, query coverage, total nb of nodes in transcriptomes
+
+````
+#!/bin/sh
+#
+#SBATCH --job-name bash
+#SBATCH --cpus-per-task=2
+#SBATCH -o o.bash2
+#SBATCH -e e.bash2
+#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# Gather additional data of HMM output:
+# Add query id to each target sequence significantly aligned (to its query) and alignement score
+for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
+do
+   id_name=$(echo "${f##*/}")
+   echo "$id_name"
+   refpr=$(echo $id_name | cut -d'_' -f2)
+   echo "$refpr"
+   sed 's/  */ /g' ${f} | awk -v name="$id_name" -v ref="$refpr" -F " " '/^N/ {print$1";"$4";"$7";"$8";"$22";"name";swarmer;"($17-$16+1)/$6";"ref}' | sed 's/(+),score=//g' | sed 's/(-),score=//g' | uniq >> node_query_score.csv
+done
+
+awk -F";" '$6 ~/soft/ || $6 ~/S/ {print$0";S"} ; $6 !~/soft/ && $6 !~/S/ && $6 !~/hf/ && $6 !~/H/ && $6 !~/hard/ {print$0";T"} ; $6 ~/hard/ || $6 ~/H/ || $6 ~/hf/ {print$0";H"}' node_query_score.csv > node_query_score_2.csv
+awk -F";" '$6 ~/hf44/ {print$0";A1_Vi_SW"} ; $6 ~/hf45/ {print$0";A2_Vi_SW"} ; $6 ~/hf46/ {print$0";A3_Vi_SW"} ; $6 ~/E561/ {print$0";A4_Vi_CY"} ; $6 ~/E587/ {print$0";A2_Vi_CY"} ; $6 ~/M345/ {print$0";F1_Mo_MESW"}  ; $6 ~/M357/ {print$0";C1_Mo_SW"} ; $6 ~/M380/ {print$0";A5_Mo_ME"} ; $6 ~/SP22/ {print$0";A5_Vi_ME"}' node_query_score_2.csv > node_query_score_3.csv
+awk -F";" '{OFS = FS} $11 ~/ME/ {$9="meiosis"} ; {print$0}' node_query_score_3.csv > node_query_score_4.csv
+
+   # Count number of hits per reference, meiosis
+for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
+do
+cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/
+echo "looping 1 "${f##*/}""
+   for i in $(cat meiosis_query_ids.txt);
+    do
+      echo "im in the loop 2, $i"
+      hits=$(echo | grep -c "$i" ${f})
+      echo "$i;${f##*/};$hits" >> ../graphics/meiosis_query_counts.csv
+   done
+      # Count number of hits per reference, gamete
+   echo "looping 1 "${f##*/}""
+   for i in $(cat gamete_query_ids.txt);
+    do
+      echo "im in the loop 2, $i"
+      hits=$(echo | grep -c "$i" ${f})
+      echo "$i;${f##*/};$hits" >> ../graphics/gamete_query_counts.csv
+   done
+done
+
+cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/
+grep -F -v ";0" meiosis_query_counts.csv > meiosis_query_counts2.csv && mv meiosis_query_counts2.csv meiosis_query_counts.csv 
+grep -F -v ";0" gamete_query_counts.csv > gamete_query_counts2.csv && mv gamete_query_counts2.csv gamete_query_counts.csv 
+
+for i in $(cat gamete_query_counts.csv);
+do
+  echo "$i"
+  target=$(echo "$i" | cut -d';' -f2)
+  hits=$(echo "$i" | cut -d';' -f3)
+  pr=$(echo "$i" | cut -d';' -f1)
+  echo "$target;$hits;$pr"
+  awk -v tar="$target" -v hit="$hits" -v prot="$pr" -F";" '$6==tar && $2==prot {print$0";"hit}' node_query_score_4.csv >> node_query_score_hits.csv
+done
+
+for i in $(cat meiosis_query_counts.csv);
+do
+  echo "$i"
+  target=$(echo "$i" | cut -d';' -f2)
+  hits=$(echo "$i" | cut -d';' -f3)
+  pr=$(echo "$i" | cut -d';' -f1)
+  echo "$target;$hits;$pr"
+  awk -v tar="$target" -v hit="$hits" -v prot="$pr" -F";" '$6==tar && $2==prot {print$0";"hit}' node_query_score_4.csv >> node_query_score_hits.csv
+done
+
+# Add nb of nodes in each transcriptome
+for i in $(cat node_count_MESW.csv);
+do 
+  echo "$i"
+  count=$(echo "$i" | cut -d';' -f1)
+  target=$(echo "$i" | cut -d';' -f2)
+  echo "$target;$count"
+  awk -v targ="$target" -v nb="$count" -F";" '$6~$targ {print$0";"nb}' node_query_score_hits.csv >> node_count_query_score_hits.csv
+done
+##
+````
 
 scRNA_HMM.Rmd
 
