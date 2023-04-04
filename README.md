@@ -19,7 +19,7 @@ EggNog, Interproscan
 
 #### 1.2 HMM profile search: 
 
-*Step 1: 
+* Step 1: 
 
 Align hmm profiles against peptidome data: HMM_search.sh
 
@@ -59,7 +59,7 @@ done
 
 ````
 
-*Step 2: 
+* Step 2: 
 
 Transcripts blasting with query domains were recovered in fasta files: hmm_fasta_convert_{lifestage}.sh
 
@@ -135,7 +135,7 @@ done
 ##
 ````
 
-*Step 3: 
+* Step 3: 
 
 After the fasta sequences have been gathered, they are reorganised by query protein id: fasta_folders_{lifestage}.sh
 
