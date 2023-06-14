@@ -21,7 +21,7 @@ EggNog, Interproscan
 
 * Step 1: 
 
-Align hmm profiles against peptidome data: HMM_search.sh
+Align hmm profiles against predicted peptidome data: HMM_search.sh
 
 ````
 #!/bin/sh
@@ -183,8 +183,16 @@ done
 These output files are the basis of multiple sequence alignemnts and phylogenetic gene trees reconstructions (cf. 2.2).
 
 
-#### 1.3 Blast identified gene reads on reference protist genes: 
-Transcriptome data
+#### 1.3 Target gene validation: 
+-Interproscan
+
+-Add resolution to analysis by blasting the HMM PFAMs to sequences according to various models with myCLADE: http://www.lcqb.upmc.fr/myclade/ 
+
+-Check if sequences contain expected protein transmembrane domains with TMHMM
+
+
+#### 1.4 Place the validated reproductive genes in an evolutionary context: 
+Calculate genes trees and compare to species tree.
 
 
 ### 2. Comparative approach
@@ -197,6 +205,7 @@ Orthofinder
 Are the gene trees and species tree congruent ?
 
 
+
 ## Reference protist genes
 
 Gamete related = 10 (cf. table X)
@@ -206,6 +215,7 @@ among which 10 gamete specific = all except CFA20
 
 Meiosis related = 33
 among which X meiosis specific =
+
 
 
 ## Life stages
@@ -425,7 +435,62 @@ done
 
 ````
 
-#### Genes Tree
+Identify the dominant form of ribosomal transcript in the cell according to gene expression:
+
+
+Maximum likelihood phylogenetic reconstruction using raxML-ng, evolutionary model GTR+G:
+
+
+
+
+
+
+#### Gene Trees
+
+Multiple Sequence Alignment (MSA) using FSA (Fast Statistical ALignment) based on pairwised estimations of homology.
+
+````
+# Quick alignment
+
+time fsa --fast seq.fasta > seq_aligned.fasta
+
+````
+
+Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model JTT+G for proteins.
+
+````
+module load raxml-ng/1.1.0
+
+# Step 1 ~ check: check that the MSA is compatible with raxML 
+raxml-ng --check --msa-format FASTA --msa seq_aligned.fasta --model JTT+G --prefix T1
+
+# Information about duplicate sequences, nb of sites and proportion of gaps and invariant sites is printed
+
+# Step 2 ~ parse: estimate the optimal parameters (memory, nb threads) for calculating the phylogeny with the given data
+raxml-ng --parse --msa T1.raxml.phy --model JTT+G --prefix T2
+
+# Step 3 ~ phylogeny: the default nb of starting trees is 20, 10 random + 10 parsimony
+raxml-ng --msa T1.raxml.phy --model JTT+G --prefix T3 --seed $RANDOM --threads 6
+
+# To gain in time the nb of starting trees can be set manually:
+raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model JTT+G --prefix T3_hapOGA --seed 5674 --threads 4 --workers 10 --tree "pars{2},rand{2}" 
+
+# Step 4 ~ multiple best topologies in tree space? Ideally, one topology is the best.
+raxml-ng --rfdist --tree T3.raxml.mlTrees --prefix T4_RF
+
+# Step 5 ~ bootstrap (BS): test the robustness of the best ML tree by randomnly modifying the MSA
+raxml-ng --bootstrap --msa T1.raxml.phy --model JTT+G --prefix T5 --seed 2 --threads 6 --bs-trees 100
+
+# Step 6 ~ add BS values: add bootstrap support values on the best ML tree
+raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
+
+````
+
+
+
+
+
+
 
 ## Next steps
 
