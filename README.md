@@ -473,7 +473,7 @@ raxml-ng --parse --msa T1.raxml.phy --model JTT+G --prefix T2
 raxml-ng --msa T1.raxml.phy --model JTT+G --prefix T3 --seed $RANDOM --threads 6
 
 # To gain in time the nb of starting trees can be set manually:
-raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model JTT+G --prefix T3_hapOGA --seed 5674 --threads 4 --workers 10 --tree "pars{2},rand{2}" 
+raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model JTT+G --prefix T3_hapOGA --seed $RANDOM --threads 4 --workers 10 --tree "pars{2},rand{2}" 
 
 # Step 4 ~ multiple best topologies in tree space? Ideally, one topology is the best.
 raxml-ng --rfdist --tree T3.raxml.mlTrees --prefix T4_RF
