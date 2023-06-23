@@ -452,7 +452,7 @@ Multiple Sequence Alignment (MSA) using FSA (Fast Statistical ALignment) based o
 ````
 # Quick alignment
 
-time fsa --fast seq.fasta > seq_aligned.fasta
+time fsa seq.fasta > seq_aligned.fasta
 
 ````
 
