@@ -485,7 +485,7 @@ raxml-ng --bootstrap --msa T1.raxml.phy --model JTT+G --prefix T5 --seed 2 --thr
 raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
 
 # One-step command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
-raxml-ng --all --msa pT1.raxml.phy --model JTT+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp
+raxml-ng --all --msa pT1.raxml.phy --model JTT+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp --bs-trees 100
 
 ````
 
