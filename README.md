@@ -33,27 +33,35 @@ Align hmm profiles against predicted peptidome data: HMM_search.sh
 #SBATCH --mail-user=iris.rizos@sb-roscoff.fr
 #SBATCH --mail-type=BEGIN,FAIL,END
 
+# Load module
+module load hmmer/3.3.2
+
+# Date of analysis
 today=$(date +%F)
+
+# Reference HMM profiles files
+HMM_G="HMM_search_gamete_ref.hmm"
+HMM_M="HMM_search_meiosis_ref.hmm"
 
 # Run by life stage
 # ${f##*/} allows to remove f extension and keep filename only
 
 for f in /shared/projects/rhizaria_ref/Sexual_cycle/adult/*/*;
 do
-    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_gamete_${f##*/}_${today}.tsv HMM_search_gamete_ref.hmm ${f} 
-    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_meiosis_${f##*/}_${today}.tsv HMM_search_meiosis_ref.hmm ${f} 
+    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
+    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
 done
 
 for f in /shared/projects/rhizaria_ref/Sexual_cycle/meiosis_swarmer/*/*;
 do
-    hmmsearch -A swarmer/hmm_gamete_${f##*/}_${today}.sto -o swarmer/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_gamete_${f##*/}_${today}.tsv HMM_search_gamete_ref.hmm ${f} 
-    hmmsearch -A swarmer/hmm_meiosis_${f##*/}_${today}.sto -o swarmer/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_meiosis_${f##*/}_${today}.tsv HMM_search_meiosis_ref.hmm ${f} 
+    hmmsearch -A swarmer/hmm_gamete_${f##*/}_${today}.sto -o swarmer/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
+    hmmsearch -A swarmer/hmm_meiosis_${f##*/}_${today}.sto -o swarmer/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
 done
 
 for f in /shared/projects/rhizaria_ref/Sexual_cycle/cyst/*;
 do
-    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_gamete_${f##*/}_${today}.tsv HMM_search_gamete_ref.hmm ${f} 
-    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_meiosis_${f##*/}_${today}.tsv HMM_search_meiosis_ref.hmm ${f} 
+    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
+    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
 done
 ##
 
@@ -63,7 +71,7 @@ done
 
 Transcripts blasting with query domains were recovered in fasta files: hmm_fasta_convert_{lifestage}.sh
 
-Headers contain the query id with which the domains significantly blasted (eval < 0.001) and the transcriptome id of the alignment.
+Headers of the fasta sequences contain the query id with which the domains significantly blasted (eval < 0.001) and the transcriptome id of the alignment.
 
 The following script allows to convert alignements in stockholm format to the fasta file described above.
 For that the use of easel miniapps implemented in HMMER is necessary (http://cryptogenomicon.org/extracting-hmmer-results-to-sequence-files-easel-miniapplications.html).
@@ -80,7 +88,7 @@ This script is applied to swarmer and meiosis transcriptome data. The equivalent
 #SBATCH --mail-user=iris.rizos@sb-roscoff.fr
 #SBATCH --mail-type=BEGIN,FAIL,END
 
-module load hmmer/3.2.1
+module load hmmer/3.3.2
 
 # For every stockholm generated file of significant alignmnets: get target sequences in fasta
 for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.sto;
@@ -180,7 +188,7 @@ done
 ##
 ````
 
-These output files are the basis of multiple sequence alignemnts and phylogenetic gene trees reconstructions (cf. 2.2).
+These output files are the basis of multiple sequence alignments and phylogenetic gene trees reconstructions (cf. 2.2).
 
 
 #### 1.3 Target gene validation: 
@@ -188,7 +196,7 @@ These output files are the basis of multiple sequence alignemnts and phylogeneti
 
 -Add resolution to analysis by blasting the HMM PFAMs to sequences according to various models with myCLADE: http://www.lcqb.upmc.fr/myclade/ 
 
--Check if sequences contain expected protein transmembrane domains with TMHMM
+-Check if sequences contain expected transmembrane domains with TMHMM
 
 
 #### 1.4 Place the validated reproductive genes in an evolutionary context: 
