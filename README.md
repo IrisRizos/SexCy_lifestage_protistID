@@ -343,13 +343,13 @@ Are the gene trees and species tree congruent ?
 
 ## Reference protist genes
 
-Gamete related = 10 (cf. table X)
-CFA20, macA, HAP2-GCS1, Fus1, GEX2, KAR5, Fus2, MATa1, SAM, MatA
+Gamete related genes= 11 (cf. table X)
+CFA20, MAC-A, HAP2-GCS1, FUS1, GEX2, KAR5, Fus2, MATa1, SAM, MatA, CFA20
 
 among which 10 gamete specific = all except CFA20
 
-Meiosis related = 33
-among which X meiosis specific =
+Meiosis related = 32 (35 domains)
+among which 11 meiosis specific = REC8, HOP1, SPO22, PCH2, SPO11, HOP2, MND1, DMC1, MSH4, MSH5, MER3
 
 
 
