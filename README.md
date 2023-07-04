@@ -190,94 +190,13 @@ done
 
 These output files are the basis of multiple sequence alignments and phylogenetic gene trees reconstructions (cf. 2.2).
 
+*Step 4: 
 
-#### 1.3 Target gene validation: 
--Interproscan
-
--Add resolution to analysis by blasting the HMM PFAMs to sequences according to various models with myCLADE: http://www.lcqb.upmc.fr/myclade/ 
-
--Check if sequences contain expected transmembrane domains with TMHMM
-
-
-#### 1.4 Place the validated reproductive genes in an evolutionary context: 
-Calculate genes trees and compare to species tree.
-
-
-### 2. Comparative approach
-
-#### 2.1 Creating clusters of ortholog genes:
-Orthofinder
-
-
-#### 2.2 Phylogenetic relationships of sexual genes:
-Are the gene trees and species tree congruent ?
-
-
-
-## Reference protist genes
-
-Gamete related = 10 (cf. table X)
-CFA20, macA, HAP2-GCS1, Fus1, GEX2, KAR5, Fus2, MATa1, SAM, MatA
-
-among which 10 gamete specific = all except CFA20
-
-Meiosis related = 33
-among which X meiosis specific =
-
-
-
-## Life stages
-
-The radiolarian life stages studied here are:
-
--Swarmer: hypothetical gamete stage 
-The expression of gamete reference genes is investigated among 4 single-cell swarmer transcriptomes of 3 acantharian and 1 collodarian species.
-
--Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
-
-Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
-
-*Vegetative swarming*: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
-
-Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species.
-
-*Cyst swarming*: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
-
-Samples include 2 acantharian species among which one also undergone vegetative swarming (i.e. one of the acantharian swarmer samples).
-
-Both the expression of meiosis and gamete reference genes is investigated as the presence of swarmers inside the cell is suspected.
-
-
-## Scripts
-
-### 1. Functional annotation tools: 
-
-* Analysis:
-
-bash eggnog + interpro
-
-scRNA_FuAnnotations.Rmd
-
-* Graphical outputs:
-
-
-
-### 2. HMM profile search: 
-
-* Analysis:
-
-HMM_search.sh
-
-hmm_fasta_convert_{lifestage}.sh
-
-fasta_folders_{lifestage}.sh
-
-* Graphical outputs:
-
-2 bash scripts + 1 R: node_count.sh, hmm_graphics_2.sh, scRNA_HMM.Rmd
+File parsing and combination in order to produce the graphical output of the analysis in R (cf. Scripts).
 
 The first bash script allows to recover the predicted number of proteins for each transcriptome.
 
+````
 #!/bin/sh
 #
 #SBATCH --job-name bash
@@ -309,6 +228,7 @@ do
    echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_count_VE.csv
 done
 ##
+````
 
 The second bash script recovers quality information relative to the hmm profile alignments and combines it with the output of the previous script.
 The final file of this script node_count_query_score_hits.csv, is the input for graphical representations.
@@ -398,8 +318,94 @@ done
 ##
 ````
 
+#### 1.3 Target gene validation: 
+-Interproscan
 
-scRNA_HMM.Rmd
+-Add resolution to analysis by blasting the HMM PFAMs to sequences according to various models with myCLADE: http://www.lcqb.upmc.fr/myclade/ 
+
+-Check if sequences contain expected transmembrane domains with TMHMM
+
+
+#### 1.4 Place the validated reproductive genes in an evolutionary context: 
+Calculate genes trees and compare to species tree.
+
+
+### 2. Comparative approach
+
+#### 2.1 Creating clusters of ortholog genes:
+Orthofinder
+
+
+#### 2.2 Phylogenetic relationships of sexual genes:
+Are the gene trees and species tree congruent ?
+
+
+
+## Reference protist genes
+
+Gamete related = 10 (cf. table X)
+CFA20, macA, HAP2-GCS1, Fus1, GEX2, KAR5, Fus2, MATa1, SAM, MatA
+
+among which 10 gamete specific = all except CFA20
+
+Meiosis related = 33
+among which X meiosis specific =
+
+
+
+## Life stages
+
+The radiolarian life stages studied here are:
+
+-Swarmer: hypothetical gamete stage 
+The expression of gamete reference genes is investigated among 4 single-cell swarmer transcriptomes of 3 acantharian and 1 collodarian species.
+
+-Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
+
+Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
+
+*Vegetative swarming*: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
+
+Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species.
+
+*Cyst swarming*: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
+
+Samples include 2 acantharian species among which one also undergone vegetative swarming (i.e. one of the acantharian swarmer samples).
+
+Both the expression of meiosis and gamete reference genes is investigated as the presence of swarmers inside the cell is suspected.
+
+
+## Scripts
+
+### 1. Functional annotation tools: 
+
+* Analysis:
+
+bash eggnog + interpro
+
+scRNA_FuAnnotations.Rmd
+
+* Graphical outputs:
+
+
+
+### 2. HMM profile search: 
+
+* Analysis:
+
+HMM_search.sh
+
+hmm_fasta_convert_{lifestage}.sh
+
+fasta_folders_{lifestage}.sh
+
+
+* Graphical outputs:
+
+2 bash scripts + 1 R: node_count.sh, hmm_graphics_2.sh, scRNA_HMM.Rmd
+
+
+++scRNA_HMM.Rmd
 
 ![Graphical](HMM_heatmap_overview.png)
 
