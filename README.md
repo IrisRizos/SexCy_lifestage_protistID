@@ -60,8 +60,8 @@ done
 
 for f in /shared/projects/rhizaria_ref/Sexual_cycle/cyst/*;
 do
-    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
-    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
+    hmmsearch -A cyst/hmm_gamete_${f##*/}_${today}.sto -o cyst/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
+    hmmsearch -A cyst/hmm_meiosis_${f##*/}_${today}.sto -o cyst/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
 done
 ##
 
