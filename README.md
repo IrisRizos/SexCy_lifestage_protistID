@@ -470,6 +470,14 @@ time fsa seq.fasta > seq_aligned.fasta
 
 ````
 
+MSA trimming with Trimmal, 70% of sequences allowed with gaps.
+
+````
+module load trimal/1.4.1  
+
+trimal -in seq_aligned.fasta -out seq_aligned_70.fasta -gt 0.3
+````
+
 Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model JTT+G for proteins.
 
 ````
