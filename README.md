@@ -506,7 +506,7 @@ raxml-ng --bootstrap --msa T1.raxml.phy --model JTT+G --prefix T5 --seed 2 --thr
 # Step 6 ~ add BS values: add bootstrap support values on the best ML tree
 raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
 
-# One-step command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
+# ONE-STEP command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
 raxml-ng --all --msa pT1.raxml.phy --model JTT+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp --bs-trees 100
 
 ````
