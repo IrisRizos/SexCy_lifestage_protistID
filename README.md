@@ -461,12 +461,12 @@ Maximum likelihood phylogenetic reconstruction using raxML-ng, evolutionary mode
 
 #### Gene Trees
 
-Multiple Sequence Alignment (MSA) using FSA (Fast Statistical ALignment) based on pairwised estimations of homology.
+Multiple Sequence Alignment (MSA) using MAFFT using the E-INS-i algortithm optimised for sequences with multiple conserved domains.
 
 ````
-# Quick alignment
+# Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
 
-time fsa seq.fasta > seq_aligned.fasta
+mafft --maxiterate 1000 --genafpair --thread 6 seq.fasta > seq_aligned.fasta
 
 ````
 
@@ -475,7 +475,7 @@ MSA trimming with Trimmal, 70% of sequences allowed with gaps.
 ````
 module load trimal/1.4.1  
 
-trimal -in seq_aligned.fasta -out seq_aligned_70.fasta -gt 0.3
+trimal -in seq_aligned.fasta -out seq_aligned_trim.fasta -gt 0.3
 ````
 
 Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model JTT+G for proteins.
@@ -484,7 +484,7 @@ Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary 
 module load raxml-ng/1.1.0
 
 # Step 1 ~ check: check that the MSA is compatible with raxML 
-raxml-ng --check --msa-format FASTA --msa seq_aligned.fasta --model JTT+G --prefix T1
+raxml-ng --check --msa-format FASTA --msa seq_aligned_trim.fasta --model JTT+G --prefix T1
 
 # Information about duplicate sequences, nb of sites and proportion of gaps and invariant sites is printed
 
