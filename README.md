@@ -411,23 +411,26 @@ fasta_folders_{lifestage}.sh
 
 
 
-### 3. Blast identified gene reads on reference protist genes: 
+### 3. Orthofinder: 
 
+As the nodes of different transcriptomes are combined together in the analysis, the transcriptome/individual id should by added to the node id.
+The transcriptomes to be compared are located in the fasta files directory.
 
+````
+# Load module
+module load orthofinder/2.5.2
 
+# Command
+orthofinder -f fasta_files_directory
+````
 
-### 4. Orthofinder: 
-
-
-
-
-### 5. Phylogenetic reconstructions: 
+### 4. Phylogenetic reconstructions: 
 
 #### Species Tree
 Recovery of rRNA sequences in transcriptomes:
+
 ````
-#!/bin/sh
-#
+#!/bin/bash
 #SBATCH --job-name rrna_recovery
 #SBATCH --cpus-per-task=2
 #SBATCH -o o.rrna
