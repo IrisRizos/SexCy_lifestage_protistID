@@ -442,8 +442,8 @@ cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/
 cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$2=="H" {print $3"_"$1}' | awk -F"_length" '{print $1}' | awk -F"_" '{print $4"_"$1$2$3"_"$5"_"}' >> Ref_node_list_2507.csv
 
 # Vegetative stage & merge
-cut -d";" -f1,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | awk -F";" '$2 ~/amphil/ {OFS = FS} {gsub ("Gene.","Gene_Amel_",$1); print $1} ; \
-$2 ~/Actin/ {OFS = FS} {gsub ("TRINITY_","TRINITY_Acpr_",$1); print $1} ; $2 ~/sticho/ {OFS = FS} {gsub ("TRINITY_","TRINITY_Stza_",$1); print $1}' | awk -F"_" '$2=="Amel" || $2=="Acpr" || $2=="Stza" {print$0}' | sed 's/:/_/g'  >> Ref_node_list_2507.csv
+cut -d";" -f1,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | awk -F";" '$2 ~/amphil/ {gsub ("Gene.","Gene_Amel_",$1); print $1} ; \
+$2 ~/Actin/ {gsub ("TRINITY_","TRINITY_Acpr_",$1); print $1} ; $2 ~/sticho/ {gsub ("TRINITY_","TRINITY_Stza_",$1); print $1}' | awk -F"_" '$2=="Amel" || $2=="Acpr" || $2=="Stza" {print$0}' | sed 's/:/_/g'  >> Ref_node_list_2507.csv
 
 grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Orthogroup_Sequences/*.fa > OG_sexCy_nodes.txt
 grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Single_Copy_Orthologue_Sequences/*.fa > OG_single_sexCy_nodes.txt
@@ -472,6 +472,9 @@ grep -c "A2ViSW" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A2ViSW' 
 grep -c "A3ViSW" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A3ViSW' > OG_ref_nodes_A3ViSW.csv
 grep -c "A4ViCY" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A4ViCY' > OG_ref_nodes_A4ViCY.csv
 grep -c "A2ViCY" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A2ViCY' > OG_ref_nodes_A4ViCY.csv
+grep -c "Gene_Amel_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Amel' > OG_ref_nodes_Amel.csv
+grep -c "__TRINITY_Acpr_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Acpr' > OG_ref_nodes_Acpr.csv
+grep -c "__TRINITY_Stza_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Stza' > OG_ref_nodes_Stza.csv
 
 # Merge all species in one file
 paste OG_ref_size.csv OG_ref_nodes*.csv -d"," > OG_ref_size_nodes_sp.csv
@@ -484,9 +487,8 @@ cut -d";" -f1,2,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/swarme
 cut -d";" -f1,2,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$3=="H" {print $2","$4","$1}' | awk -F"_length" '{print $1}' | awk -F"," '{OFS = FS} {gsub ("_","",$2); print $0}' | awk -F",NODE" '{print $1$2$3}' >> Ref_pr_list_2707.csv
 
 # Vegetative stage data & merge
-cut -d";" -f1,2,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$3=="H" {print $2","$4","$1}' | awk -F"_length" '{print $1}' | awk -F"," '{OFS = FS} {gsub ("_","",$2); print $0}' | awk -F",NODE" '{print $1$2$3}' >> Ref_pr_list_2707.csv
-
-
+cut -d";" -f1,2,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | 
+ awk -F";" '$3 ~/amphil/ {gsub("Gene.","Amel_",$1); print $1";"$2} ; $3 ~/sticho/ {gsub("TRINITY_","Stza_",$1); print $1";"$2} ; $3 ~/Actin/ {gsub("TRINITY_","Acpr_",$1); print $1";"$2}' | awk -F"_" '$1=="Amel" || $1=="Acpr" || $1=="Stza" {print$0}' | awk -F";" '{print$2","$1}' | awk -F"_c" '{print$1}' | awk -F"::" '{print$1}' >> Ref_pr_list_2707.csv
 
 # Create reference file with sexCy OG id and sample id
 awk -F"/" '{print$2}' OG_sexCy_nodes.txt | awk -F"_" '{print$1","$2"_"$3}' | sed 's/.fa:>NODE//g' | sed '1iOG,Node' > OG_sexCy_nodes_sp.csv
