@@ -442,9 +442,8 @@ cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/
 cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$2=="H" {print $3"_"$1}' | awk -F"_length" '{print $1}' | awk -F"_" '{print $4"_"$1$2$3"_"$5"_"}' >> Ref_node_list_2507.csv
 
 # Vegetative stage & merge
-cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | awk -F";" '{print $2"_"$1}' | awk -F"_length" '{print $1}' | awk -F"_" '{print $4"_"$1$2$3"_"}' >> Ref_node_list_2507.csv
-
-
+cut -d";" -f1,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | awk -F";" '$2 ~/amphil/ {OFS = FS} {gsub ("Gene.","Gene_Amel_",$1); print $1} ; \
+$2 ~/Actin/ {OFS = FS} {gsub ("TRINITY_","TRINITY_Acpr_",$1); print $1} ; $2 ~/sticho/ {OFS = FS} {gsub ("TRINITY_","TRINITY_Stza_",$1); print $1}' | awk -F"_" '$2=="Amel" || $2=="Acpr" || $2=="Stza" {print$0}' | sed 's/:/_/g'  >> Ref_node_list_2507.csv
 
 grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Orthogroup_Sequences/*.fa > OG_sexCy_nodes.txt
 grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Single_Copy_Orthologue_Sequences/*.fa > OG_single_sexCy_nodes.txt
