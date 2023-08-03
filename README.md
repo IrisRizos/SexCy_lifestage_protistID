@@ -412,9 +412,37 @@ fasta_folders_{lifestage}.sh
 
 ![Graphical](HMM_heatmap_overview.png)
 
+### 3. Relative expression: 
+* Analysis:
+
+-Compute remapping rates:
+
+genexpr_matrix2.sh --> ask Chat
+
+-Compute relative expression in TPM:
+
+scRNA_GenExpr.Rmd
+
+The script runs on the remapping rate (quant.sf of each gene on the transcriptome calculated by Salmon.
+
+First, the quant.sf files are grouped in a separate directory by Radiolarian group and by individual.
+As the nodes of each quant.sf files will be in the output of the TPM expression we need a way to recognise the nodes of each individual. This is done by adding the individual (or sample) id in each node id.
+
+````
+sed -i 's/NODE_/NODE_A1ViSW_/g' quant.sf
+
+````
+
+````
+
+````
+
+* Graphical outputs:
+scRNA_GenExpr.Rmd
 
 
-### 3. Orthofinder: 
+
+### 4. Orthofinder: 
 
 As the nodes of different transcriptomes are combined together in the analysis, the transcriptome/individual id should by added to the node id.
 The transcriptomes to be compared are located in the fasta files directory.
@@ -495,7 +523,7 @@ awk -F"/" '{print$2}' OG_sexCy_nodes.txt | awk -F"_" '{print$1","$2"_"$3}' | sed
 ````
 
 
-### 4. Phylogenetic reconstructions: 
+### 5. Phylogenetic reconstructions: 
 
 #### Species Tree
 Recovery of rRNA sequences in transcriptomes:
