@@ -553,6 +553,77 @@ done
 
 Identify the dominant form of ribosomal transcript in the cell according to gene expression:
 
+````
+# Create files with 18S and 28S nodes headers
+sed 's/)/:/g' 18S_rRNA.fasta | awk -F":" '/^>/ {print $3","$5}'  | sed 's/_euk_//g' | sed 's/rRNA//g' | sed 's/rrna//g' | sed '1inode,sample' > ../plots/18S_rRNA_nodes.csv
+sed 's/)/:/g' 28S_rRNA.fasta | awk -F":" '/^>/ {print $3","$5}'  | sed 's/_euk_//g' | sed 's/rRNA//g' | sed 's/rrna//g' | sed '1inode,sample' > ../plots/28S_rRNA_nodes.csv
+````
+
+Node headers and node expression data are merged in Rstudio (part of scRNA_GenExpr.Rmd script), detail below:
+
+````
+## Rstudio
+# Gene expression file
+quants_id_final_A <- read.csv("Global_quant_file_Acantharia_030823.csv",sep=",",stringsAsFactors = T)
+quants_id_final_C <- read.csv("Global_quant_file_Collodaria_030823.csv",sep=",",stringsAsFactors = T)
+quants_id_final_F <- read.csv("Global_quant_file_Foraminifera_030823.csv",sep=",",stringsAsFactors = T)
+quants_id_final <- rbind(quants_id_final_A,quants_id_final_C,quants_id_final_F)
+
+# 18S node ids 
+nodes <- read.csv("18S_rRNA_nodes.csv",sep=",",stringsAsFactors = T)
+
+# 28S node ids 
+nodes_2 <- read.csv("28S_rRNA_nodes.csv",sep=",",stringsAsFactors = T)
+
+## Following lines are used either with nodes or nodes_2 file, the example below applies to nodes:
+# Merge tables
+nodes_expr <- merge(nodes, quants_id_final, by="node", all.x=T)
+
+# Separate short node id
+nodes_expr2 <- cbind(str_split_fixed(nodes_expr$node,"_length_",2), nodes_expr)
+colnames(nodes_expr2)[1] <- "simple_id"
+colnames(nodes_expr2)[2] <- "detail_id"
+
+# Set order of samples
+nodes_expr2$sample.y <- factor(nodes_expr2$sample.y, levels=c("A1ViSW", "A2ViSW", "A3ViSW", "A2ViCY","A4ViCY", "A5ViME","C1MoSW","FiMoMESW","F2MoME"))
+
+# Plot x=nodes and y=expression level
+ggplot(nodes_expr2, aes(x=sample.y, y=tpm_global)) +
+  geom_point(aes(color=sample.y), alpha=0.5, size=3) +
+  geom_hline(aes(yintercept=av_expr, color=sample.y), linetype="dashed", size=0.5) +
+  geom_text(aes(label=simple_id), position=position_dodge(width=2), vjust=-1) +
+  facet_nested(cols=vars(group,sample.y), scales = "free", space = "free") +
+  theme_classic() +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +      
+  labs(x="Sample", y="Normalised gene expression (TPM)", color="Sample") +
+  ggtitle("18S copies relative expression") +
+  theme(plot.title = element_text(face="bold"))
+````
+Based on the output of Rstudio, the node headers are here selected manually due to the low number of samples and saved in separated 18S and 28S files.
+These will be the input files for phylogenetic reconstruction.
+
+````
+# Select 18S copies that are most abundant in relative expression when multiple
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_13_length_3765_cov_55556.817714_g9_i0" | sed 's/_euk_rRNA/\n/g' > 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_185_length_3420_cov_635.543771_g11_i1" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_505_length_1621_cov_3355.087855_g279_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_544_length_1899_cov_7786.025739_g172_i0" | sed 's/_euk_hf45/_hf45\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_2331_length_1873_cov_2256.565556_g1386_i1" | sed 's/_euk_hf46/_hf46\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_871_length_1820_cov_3097.453349_g328_i1" | sed 's/_euk_hf44/_hf44\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_8594_length_3132_cov_4907.534815_g5996_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
+tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_845_length_1881_cov_4.923119_g778_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
+
+# Select 18S copies that are most abundant in relative expression when multiple
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_13_length_3765_cov_55556.817714_g9_i0" | sed 's/_euk_rRNA/\n/g' > 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_90_length_3266_cov_8943.846852_g16_i3" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_697_length_2048_cov_559.458734_g11_i2" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_748_length_1688_cov_5449.676161_g275_i0" | sed 's/_euk_hf45/_hf45\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_507_length_3165_cov_6478.737387_g254_i3" | sed 's/_euk_hf46/_hf46\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_704_length_1938_cov_24186.071850_g236_i1" | sed 's/_euk_hf44/_hf44\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_578_length_2200_cov_15.303244_g527_i0" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
+tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_9863_length_2961_cov_13963.394044_g6944_i0" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
+````
 
 Maximum likelihood phylogenetic reconstruction using raxML-ng, evolutionary model GTR+G:
 
