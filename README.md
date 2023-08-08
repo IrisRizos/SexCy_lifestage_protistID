@@ -627,20 +627,64 @@ tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_9863_length_2961_cov_
 
 Maximum likelihood phylogenetic reconstruction using raxML-ng, evolutionary model GTR+G:
 
+Multiple Sequence Alignment (MSA) using MAFFT with an algorithm adapted to sequences with similar lengths and belonging to closely related groups.
 
+````
+# Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
 
+mafft --maxiterate 1000 --globalpair --thread 6 seq.fasta > seq_aligned.fasta
+````
+
+MSA trimming with Trimmal, 70% of sequences allowed with gaps.
+
+````
+module load trimal/1.4.1  
+
+trimal -in seq_aligned.fasta -out seq_aligned_trim.fasta -gt 0.3
+````
+
+Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model GTR+G for nucleotides.
+
+````
+module load raxml-ng/1.1.0
+
+# Step 1 ~ check: check that the MSA is compatible with raxML 
+raxml-ng --check --msa-format FASTA --msa seq_aligned_trim.fasta --model GTR+G --prefix T1
+
+# Information about duplicate sequences, nb of sites and proportion of gaps and invariant sites is printed
+
+# Step 2 ~ parse: estimate the optimal parameters (memory, nb threads) for calculating the phylogeny with the given data
+raxml-ng --parse --msa T1.raxml.phy --model GTR+G --prefix T2
+
+# Step 3 ~ phylogeny: the default nb of starting trees is 20, 10 random + 10 parsimony
+raxml-ng --msa T1.raxml.phy --model GTR+G --prefix T3 --seed $RANDOM --threads 6
+
+# To gain in time the nb of starting trees can be set manually:
+raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model GTR+G --prefix T3_hapOGA --seed $RANDOM --threads 4 --workers 10 --tree "pars{2},rand{2}" 
+
+# Step 4 ~ multiple best topologies in tree space? Ideally, one topology is the best.
+raxml-ng --rfdist --tree T3.raxml.mlTrees --prefix T4_RF
+
+# Step 5 ~ bootstrap (BS): test the robustness of the best ML tree by randomnly modifying the MSA
+raxml-ng --bootstrap --msa T1.raxml.phy --model GTR+G --prefix T5 --seed 2 --threads 6 --bs-trees 100
+
+# Step 6 ~ add BS values: add bootstrap support values on the best ML tree
+raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
+
+# ONE-STEP command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
+raxml-ng --all --msa pT1.raxml.phy --model GTR+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp --bs-trees 100
+````
 
 
 
 #### Gene Trees
 
-Multiple Sequence Alignment (MSA) using MAFFT using the E-INS-i algortithm optimised for sequences with multiple conserved domains.
+Multiple Sequence Alignment (MSA) using MAFFT with the E-INS-i algortithm optimised for sequences with multiple conserved domains.
 
 ````
 # Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
 
 mafft --maxiterate 1000 --genafpair --thread 6 seq.fasta > seq_aligned.fasta
-
 ````
 
 MSA trimming with Trimmal, 70% of sequences allowed with gaps.
