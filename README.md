@@ -632,7 +632,8 @@ Multiple Sequence Alignment (MSA) using MAFFT with an algorithm adapted to seque
 ````
 # Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
 
-mafft --maxiterate 1000 --globalpair --thread 6 seq.fasta > seq_aligned.fasta
+mafft --maxiterate 1000 --globalpair  ${file} > "aligned_"${file}
+
 ````
 
 MSA trimming with Trimmal, 70% of sequences allowed with gaps.
@@ -640,7 +641,7 @@ MSA trimming with Trimmal, 70% of sequences allowed with gaps.
 ````
 module load trimal/1.4.1  
 
-trimal -in seq_aligned.fasta -out seq_aligned_trim.fasta -gt 0.3
+trimal -in aligned_${file} -out "aligned_trimmed_"${file} -gt 0.3
 ````
 
 Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model GTR+G for nucleotides.
