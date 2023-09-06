@@ -625,12 +625,12 @@ tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_578_length_2200_cov_1
 tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_9863_length_2961_cov_13963.394044_g6944_i0" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
 ````
 
-Maximum likelihood phylogenetic reconstruction using raxML-ng, evolutionary model GTR+G:
-
 Multiple Sequence Alignment (MSA) using MAFFT with an algorithm adapted to sequences with similar lengths and belonging to closely related groups.
 
 ````
 # Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
+
+module load mafft/7.515
 
 mafft --maxiterate 1000 --globalpair  ${file} > "aligned_"${file}
 
