@@ -19,13 +19,13 @@ Input of step 1.: (cf. Data)
 
 ### Dataframes:
 
-* Input of step 1.: HMM_meiosis, HMM_swarmer
+* Input of step 1.: HMM_search_gamete_ref.hmm, HMM_search_meiosis_ref.hmm
 
 * Input of step 2.: 
 
 * Input of step 3.: 
 
-* Input of step 4.: quants, annotation, hmm
+* Input of step 4.: quants, annotation, node_count_query_score_hits_SW.csv, node_count_query_score_hits_CY.csv, node_count_query_score_hits_VE.csv, hmm_spA_noIso_expr6.csv
 
 
 ### Graphics:
