@@ -33,5 +33,7 @@ Input of step 1.: (cf. )
 
 * FigSX: chord diagram reprod stages
 
+* FigSX: treemaps with annot
+
 * FigSX: barplot all OGs
 
