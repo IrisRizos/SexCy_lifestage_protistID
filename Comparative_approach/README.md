@@ -1,6 +1,7 @@
 # File list:
 
-* Scripts:
+
+### Scripts:
 
 1. Creation of Orthologous protein Groups (OGs): ortho_search.sh
 
@@ -10,27 +11,27 @@
 
 
 
-* Predicted proteomes: 
+### Predicted proteomes: 
 
 Input of step 1.: (cf. )
 
 
 
-* Dataframes:
+### Dataframes:
 
-Input of step 2.: Orthogroups.GeneCount.tsv, 
+* Input of step 2.: Orthogroups.GeneCount.tsv, 
 
-Input of step 3.: 
+* Input of step 3.: 
 
 
 
-* Graphics:
+### Graphics:
 
-Fig3 A: venn
+* Fig3 A: venn
 
-Fig3 B: barplot selected OG
+* Fig3 B: barplot selected OG
 
-FigSX: chord diagram reprod stages
+* FigSX: chord diagram reprod stages
 
-FigSX: barplot all OGs
+* FigSX: barplot all OGs
 
