@@ -1,390 +1,32 @@
-# How to identify sexual cycle cues among uncultivable protists ?
+# How to identify sexual cycle cues of uncultivated protists ?
 
 
 From a genetic point of view, sexual processes seem to have arosen early in the evolution of eukaryotes and be widespread, even though observations of such mechanisms among protists are scarce (Speijer et al. 2015, Goodenough & Heitman 2014). The molecular basis of sexuality is linked to 2 cellular mechanisms: meiotic division (i.e. reduction of cell ploidy) and gamete fusion (i.e. restoration of cell ploidy to pre-meiotic stages) (Speijer et al. 2015, Goodenough & Heitman 2014).
 
 For Rhizaria that are a tedious lineage to cultivate, genetic cues can help understand the reproductive mechanisms involved in their mysterious life cycle. Sexual reproduction has been observed among some cultivable rhizarian lineages (e.g. Phytomyxea and benthic Foraminifera) but remains enigmatic for Radiolaria. The existence of a sexual cycle has long been speculated, notably by Schewiakoff ~100 years ago. Since then, the lifespan, ploidy and role of each radiolarian life stage observed on the field remain to be resolved.
 
-The present github includes the code for identifying reference protist genes specific to gamete and meiotic life stages based on single-cell transcriptomes of Radiolaria.
+The present github includes the code for identifying reference protist genes specific to gamete and meiotic life stages and novel life stage specific protein families in single-cell transcriptomes of Radiolaria.
 
 ![Graphical](Fig1_A.png)
 
-## Methods
 
-### 1. Target-gene approach
+## Genetic insight into the sexual cycle of Acantharia (Radiolaria)
 
-#### 1.1 Functional annotation tools: 
-EggNog, Interproscan
+This code is associated to the publication of (authors) in (journal).
 
+### Abstract
 
-#### 1.2 HMM profile search: 
+As an innate property of life, the ability to self-reproduce is a key process for the perpetuation of all micro-organisms. Along the evolution of protist reproductive strategies, the molecular machinery of sexual reproduction is estimated to have been inherited from the last eukaryotic common ancestor (LECA). Nevertheless, among extant protist lineages, describing novel sexual cycles is laborious as the role of uncultivated life stages remains enigmatic. For the uncultivated planktonic group of Radiolaria, a hypothetical sexual cycle has been proposed since the late 19th century. Detailed observations and descriptions of Acantharia radiolarians, made by Schewiakoff and Haeckel, have converged to the description of a life cycle including the formation of a gamete-like life stage of unknown ploidy, called swarmers, that is produced either via the vegetative cell or a cyst. In order to elucidate the function of these uncultivated life stages, we have explored molecular signs of sexual reproduction in single-cell transcriptomics of multiple acantharian life stages. Overall, our data illustrates distinct functional profiles for reproductive and vegetative life stages, while highlighting reference eukaryotic genes involved in gamete fusion, like HAP2/GCS1 and GEX1-KAR5, and life stage specific orthologous protein groups (OGs). Differential expression analysis indicated 7 up-regulated OGs specific of swarmers and 1 up-regulated OG common between both swarmer and cyst life stages. The identified genes of interest feature the potential for developing life cycle markers for estimating the acantharian lifespan in the ocean. Approaching the acantharian reproductive cycle from a genetic point of view, allows a better comprehension of the cell biology and ecology of Radiolaria at a single-cell scale. 
 
-* Step 1: 
+*Link to publication:*
 
-Align hmm profiles against predicted peptidome data: HMM_search.sh
 
-````
-#!/bin/sh
-#
-#SBATCH --job-name hmmsearch
-#SBATCH --cpus-per-task=4
-#SBATCH -o o.hmmS
-#SBATCH -e e.hmmS
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
+# Method
 
-# Load module
-module load hmmer/3.3.2
+A two-step approach was employed for describing the functional profiles of each life stage and determine their implication in a sexual cycle. First, reference sexual eukaryote genes were targeted (1) and, second, as a means to deal with the load of poorly annotated genes of uncultivated protists (~2/3), all single-cell transcriptomes were cross-compared (2) in order to highlight novel life stage specific gene families.
 
-# Date of analysis
-today=$(date +%F)
 
-# Reference HMM profiles files
-HMM_G="HMM_search_gamete_ref.hmm"
-HMM_M="HMM_search_meiosis_ref.hmm"
-
-# Run by life stage
-# ${f##*/} allows to remove f extension and keep filename only
-
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/adult/*/*;
-do
-    hmmsearch -A adult/hmm_gamete_${f##*/}_${today}.sto -o adult/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
-    hmmsearch -A adult/hmm_meiosis_${f##*/}_${today}.sto -o adult/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout adult/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
-done
-
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/meiosis_swarmer/*/*;
-do
-    hmmsearch -A swarmer/hmm_gamete_${f##*/}_${today}.sto -o swarmer/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
-    hmmsearch -A swarmer/hmm_meiosis_${f##*/}_${today}.sto -o swarmer/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout swarmer/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
-done
-
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/cyst/*;
-do
-    hmmsearch -A cyst/hmm_gamete_${f##*/}_${today}.sto -o cyst/hmm_gamete_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_gamete_${f##*/}_${today}.tsv $HMM_G ${f} 
-    hmmsearch -A cyst/hmm_meiosis_${f##*/}_${today}.sto -o cyst/hmm_meiosis_${f##*/}_${today}.txt --incdomE 0.001 --domE 0.001 --domtblout cyst/hmm_meiosis_${f##*/}_${today}.tsv $HMM_M ${f} 
-done
-##
-
-````
-
-* Step 2: 
-
-Transcripts blasting with query domains were recovered in fasta files: hmm_fasta_convert_{lifestage}.sh
-
-Headers of the fasta sequences contain the query id with which the domains significantly blasted (eval < 0.001) and the transcriptome id of the alignment.
-
-The following script allows to convert alignements in stockholm format to the fasta file described above.
-For that the use of easel miniapps implemented in HMMER is necessary (http://cryptogenomicon.org/extracting-hmmer-results-to-sequence-files-easel-miniapplications.html).
-
-This script is applied to swarmer and meiosis transcriptome data. The equivalent script is applied to each life stage (cyst and vegetative) by changing the working directory.
-
-````
-#!/bin/sh
-#
-#SBATCH --job-name hmm_fasta
-#SBATCH --cpus-per-task=2
-#SBATCH -o o.hmm_convert
-#SBATCH -e e.hmm_convert
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
-
-module load hmmer/3.3.2
-
-# For every stockholm generated file of significant alignmnets: get target sequences in fasta
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.sto;
-do
-   esl-reformat -o fasta_files/node_${f##*/}.fasta fasta ${f}
-done
-
-# Change file extensions
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/*.sto.fasta;
-do 
-   cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/
-   mv "$f" "$(basename "$f" .sto.fasta).txt.fasta"
-done
-
-# Add query id to each target sequence significantly aligned (to its query)
-cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
-do
-# Parse tsv to get node and query id
-   sed 's/  */ /g' ${f} | awk -F " " '/^N/ {print$1";"$4}' | uniq > node_${f##*/}.txt
-done
-
-# Change file extensions
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv.txt;
-do 
-   mv "$f" "$(basename "$f" .tsv.txt).txt"
-done
-
-# Print query in front of corresponding node id of fasta file
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/node_*.txt;
-do
-   echo "looping 1 "${f##*/}""
-   for i in $(cat ${f});
-   do
-      echo "im in the loop 2"
-      node=$(echo $i | cut -d';' -f1)
-      echo "$node"
-      query=$(echo $i | cut -d';' -f2)
-      echo "$query"
-      cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/
-      awk -v var1="$node" -v var2="$query" -F "/" '/^>/ {print $1"/"var1"/"var2"/"} ; !/^>/ {print $0}' ${f##*/}.fasta | tr -d "\n" | sed 's/>/\n/g' | awk -F "/" '{if ($1==$2) {print ">"$3"/"$2"\n"$4}}' >> query_${f##*/}.fasta
-   done
-done
-
-# Add transcriptome id in header of each sequence
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/query_*.txt.fasta;
-do
-   id_name=$(echo "${f##*/}")
-   echo "$id_name"
-   sed 's/>\///g' ${f} | sed '/^$/d' | awk -v name="$id_name" '/^>/ {print$0"/"name} ; !/^>/ {print$0}' | sed 's/\/>/\//g' | sed 's/.txt.fasta//g' > final_${f##*/}
-done
-##
-````
-
-* Step 3: 
-
-After the fasta sequences have been gathered, they are reorganised by query protein id: fasta_folders_{lifestage}.sh
-
-Transcripts from different transcriptomes and life stages are grouped together based on the meiosis and gamete query ids with the following script:
-
-````
-#!/bin/sh
-#
-#SBATCH --job-name fasta_by_id
-#SBATCH --cpus-per-task=2
-#SBATCH -o o.fasta
-#SBATCH -e e.fasta
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
-
-# Create separate folders for storing transcripts by hmm query
-# Gamete queries
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/final*.fasta;
-do
-   echo "looping 1 "${f##*/}""
-   for i in $(cat gamete_query_ids.txt);
-    do
-      echo "im in the loop 2"
-      query=$(echo $i | cut -f1)
-      echo "$query"
-      tr -d "\n" < ${f} | sed 's/-08/-08\//g' | sed 's/>/\n>/g' | awk -v var1="$query" '/^>/ {print ">"var1"/"$0}' | awk -F "/" '{if ($1==$2) {print $2"/"$3"/"$4"\n"$5}}' >> gamete_folder_id/${query}_SW.fasta
-   done
-done
-
-# Meiosis queries
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/final*.fasta;
-do
-   echo "looping 1 "${f##*/}""
-   for i in $(cat meiosis_query_ids.txt);
-    do
-      echo "im in the loop 2"
-      query=$(echo $i | cut -f1)
-      echo "$query"
-      tr -d "\n" < ${f} | sed 's/-08/-08\//g' | sed 's/>/\n>/g' | awk -v var1="$query" '/^>/ {print ">"var1"/"$0}' | awk -F "/" '{if ($1==$2) {print $2"/"$3"/"$4"\n"$5}}' >> meiosis_folder_id/${query}_SW.fasta
-   done
-done
-##
-````
-
-These output files are the basis of multiple sequence alignments and phylogenetic gene trees reconstructions (cf. 2.2).
-
-*Step 4: 
-
-File parsing and combination in order to produce the graphical output of the analysis in R (cf. Scripts).
-
-The first bash script allows to recover the predicted number of proteins for each transcriptome.
-
-````
-#!/bin/sh
-#
-#SBATCH --job-name bash
-#SBATCH --cpus-per-task=2
-#SBATCH -o o.bash
-#SBATCH -e e.bash
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
-
-# Get number of predicted genes for each transcriptome
-# Swarmer
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/meiosis_swarmer/*/*;
-do
-   nb_node=$(echo | grep -c ">" ${f})
-   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/node_count_MESW.csv
-done
-
-# Cyst
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/cyst/*;
-do
-   nb_node=$(echo | grep -c ">" ${f})
-   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_count_CY.csv
-done
-
-# Adult
-for f in /shared/projects/rhizaria_ref/Sexual_cycle/adult/*/*;
-do
-   nb_node=$(echo | grep -c ">" ${f})
-   echo "$nb_node;${f##*/}" >> /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_count_VE.csv
-done
-##
-````
-
-The second bash script recovers quality information relative to the hmm profile alignments and combines it with the output of the previous script.
-The final file of this script node_count_query_score_hits.csv, is the input for graphical representations.
-
-The script is run by lifestage. The example bellow runs on swarmer lifestages.
-
-````
-#!/bin/sh
-#
-#SBATCH --job-name bash
-#SBATCH --cpus-per-task=2
-#SBATCH -o o.bash2
-#SBATCH -e e.bash2
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
-
-# Gather additional data of HMM output:
-# Add query id to each target sequence significantly aligned (to its query) and alignement score
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
-do
-   id_name=$(echo "${f##*/}")
-   echo "$id_name"
-   refpr=$(echo $id_name | cut -d'_' -f2)
-   echo "$refpr"
-   sed 's/  */ /g' ${f} | awk -v name="$id_name" -v ref="$refpr" -F " " '/^N/ {print$1";"$4";"$7";"$8";"$22";"name";swarmer;"($17-$16+1)/$6";"ref}' | sed 's/(+),score=//g' | sed 's/(-),score=//g' | uniq >> node_query_score.csv
-done
-
-awk -F";" '$6 ~/soft/ || $6 ~/S/ {print$0";S"} ; $6 !~/soft/ && $6 !~/S/ && $6 !~/hf/ && $6 !~/H/ && $6 !~/hard/ {print$0";T"} ; $6 ~/hard/ || $6 ~/H/ || $6 ~/hf/ {print$0";H"}' node_query_score.csv > node_query_score_2.csv
-awk -F";" '$6 ~/hf44/ {print$0";A1_Vi_SW"} ; $6 ~/hf45/ {print$0";A2_Vi_SW"} ; $6 ~/hf46/ {print$0";A3_Vi_SW"} ; $6 ~/E561/ {print$0";A4_Vi_CY"} ; $6 ~/E587/ {print$0";A2_Vi_CY"} ; $6 ~/M345/ {print$0";F1_Mo_MESW"}  ; $6 ~/M357/ {print$0";C1_Mo_SW"} ; $6 ~/M380/ {print$0";A5_Mo_ME"} ; $6 ~/SP22/ {print$0";A5_Vi_ME"} ; $8 ~/EiSpum/ {print$0";S1_Ei_MESW"}' node_query_score_2.csv > node_query_score_3.csv
-awk -F";" '{OFS = FS} $11 ~/ME/ {$7="meiosis"} ; {print$0}' node_query_score_3.csv > node_query_score_4.csv
-
-   # Count number of hits per reference, meiosis
-for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/*.tsv;
-do
-cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/fasta_files/
-echo "looping 1 "${f##*/}""
-   for i in $(cat meiosis_query_ids.txt);
-    do
-      echo "im in the loop 2, $i"
-      hits=$(echo | grep -c "$i" ${f})
-      echo "$i;${f##*/};$hits" >> ../graphics/meiosis_query_counts.csv
-   done
-      # Count number of hits per reference, gamete
-   echo "looping 1 "${f##*/}""
-   for i in $(cat gamete_query_ids.txt);
-    do
-      echo "im in the loop 2, $i"
-      hits=$(echo | grep -c "$i" ${f})
-      echo "$i;${f##*/};$hits" >> ../graphics/gamete_query_counts.csv
-   done
-done
-
-# Remove null counts
-cd /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/
-grep -F -v ";0" meiosis_query_counts.csv > meiosis_query_counts2.csv && mv meiosis_query_counts2.csv meiosis_query_counts.csv 
-grep -F -v ";0" gamete_query_counts.csv > gamete_query_counts2.csv && mv gamete_query_counts2.csv gamete_query_counts.csv 
-
-for i in $(cat gamete_query_counts.csv);
-do
-  echo "$i"
-  target=$(echo "$i" | cut -d';' -f2)
-  hits=$(echo "$i" | cut -d';' -f3)
-  pr=$(echo "$i" | cut -d';' -f1)
-  echo "$target;$hits;$pr"
-  awk -v tar="$target" -v hit="$hits" -v prot="$pr" -F";" '$6==tar && $2==prot {print$0";"hit}' node_query_score_4.csv >> node_query_score_hits.csv
-done
-
-for i in $(cat meiosis_query_counts.csv);
-do
-  echo "$i"
-  target=$(echo "$i" | cut -d';' -f2)
-  hits=$(echo "$i" | cut -d';' -f3)
-  pr=$(echo "$i" | cut -d';' -f1)
-  echo "$target;$hits;$pr"
-  awk -v tar="$target" -v hit="$hits" -v prot="$pr" -F";" '$6==tar && $2==prot {print$0";"hit}' node_query_score_4.csv >> node_query_score_hits.csv
-done
-
-# Add nb of nodes in each transcriptome
-for i in $(cat node_count_MESW.csv);
-do 
-  echo "$i"
-  count=$(echo "$i" | cut -d';' -f1)
-  target=$(echo "$i" | cut -d';' -f2)
-  echo "$target;$count"
-  awk -v targ="$target" -v nb="$count" -F";" '$6~targ {print$0";"nb}' node_query_score_hits.csv >> node_count_query_score_hits.csv
-done
-##
-````
-
-#### 1.3 Target gene validation: 
--Interproscan
-
--Add resolution to analysis by blasting the HMM PFAMs to sequences according to various models with myCLADE: http://www.lcqb.upmc.fr/myclade/ 
-
--Check if sequences contain expected transmembrane domains with TMHMM
-
-
-#### 1.4 Place the validated reproductive genes in an evolutionary context: 
-Calculate genes trees and compare to species tree.
-
-
-### 2. Comparative approach
-
-#### 2.1 Create clusters of orthologous proteins:
-
-Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
-
-*Input data: all life stage single-cell trancriptomes
-*Output data: orthofinder folders (check manual on git page above)
-
-Scripts: 
-
-
-#### 2.2 Identify life stage specific protein families:
-
-Tools: bash, R
-
-*Input data: 
-*Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
-
-Scripts:
-
-
-#### 2.3 Select most up/down-regulated protein families for each life stage:
-
-Tools: R
-
-*Input data: TPM_abund.tsv, 
-*Output data: barplot of gene expression + list of OG enriched by life stage
-
-Scripts:
-
-
-#### 2.4 Annotation of most up/down-regulated protein families for each life stage:
-
-Tools: blastp, InterPro, MyCLADE, Phyre2
-
-*Input data: protein sequences of each protein family
-*Output data: table of annotations
-
-Scripts: manual search
-
-
-## Reference protist genes
-
-Gamete related genes= 11 (cf. table X)
-CFA20, MAC-A, HAP2-GCS1, FUS1, GEX2, KAR5, Fus2, MATa1, SAM, MatA, CFA20
-
-among which 10 gamete specific = all except CFA20
-
-Meiosis related = 32 (35 domains)
-among which 11 meiosis specific = REC8, HOP1, SPO22, PCH2, SPO11, HOP2, MND1, DMC1, MSH4, MSH5, MER3
-
-
-
-## Life stages
+## Data
 
 The radiolarian life stages studied here are:
 
@@ -409,363 +51,107 @@ Samples include 2 acantharian species among which one also undergone vegetative 
 Both the expression of meiosis and gamete reference genes is investigated as the presence of swarmers inside the cell is suspected.
 
 
-## Scripts
+![Graphical]
 
-### 1. Functional annotation tools: 
+## Preliminary analysis
 
-* Analysis:
+### 1.1 Functional annotation & differential expression: 
 
-bash eggnog + interpro
+Tools: EggNog, Salmon, Kallisto
 
-scRNA_FuAnnotations.Rmd
+*Input: predicted protein sequences (.pep file)
+*Output: annotations.tsv, abundance.tsv
 
-* Graphical outputs:
 
+### 1.2 Multivariate analysis: 
 
+Tools: R
 
-### 2. HMM profile search: 
+*Input: annotations.tsv, abundance.tsv
+*Output: NMDS, heatmap
 
-* Analysis:
 
-HMM_search.sh
+### 1.3 Phylogenetic placement of single-cells: 
 
-hmm_fasta_convert_{lifestage}.sh
 
-fasta_folders_{lifestage}.sh
 
 
-* Graphical outputs:
+## 1. Target-gene approach
 
-2 bash scripts + 1 R: node_count.sh, hmm_graphics_2.sh, scRNA_HMM.Rmd
+### Reference protist genes
 
+Gamete related genes= 11 (cf. table X)
+CFA20, MAC-A, HAP2-GCS1, FUS1, GEX2, KAR5, Fus2, MATa1, SAM, MatA, CFA20
 
-++scRNA_HMM.Rmd
+among which 10 gamete specific = all except CFA20
 
-![Graphical](HMM_heatmap_overview.png)
+Meiosis related = 32 (cf. table X)
+among which 11 meiosis specific = REC8, HOP1, SPO22, PCH2, SPO11, HOP2, MND1, DMC1, MSH4, MSH5, MER3
 
-### 3. Relative expression: 
-* Analysis:
 
--Compute remapping rates:
+### 1.2 HMM profile search: 
 
-genexpr_matrix2.sh --> ask Chat
+The HMM profiles were downloaded from: 
 
--Compute relative expression in TPM:
 
-scRNA_GenExpr.Rmd
+### 1.3 Creation of lineage specific HMM profiles: 
 
-The script runs on the remapping rate (quant.sf of each gene on the transcriptome calculated by Salmon.
 
-First, the quant.sf files are grouped in a separate directory by Radiolarian group and by individual.
-As the nodes of each quant.sf files will be in the output of the TPM expression we need a way to recognise the nodes of each individual. This is done by adding the individual (or sample) id in each node id.
 
-````
-sed -i 's/NODE_/NODE_A1ViSW_/g' quant.sf
+### 1.4 Identification of up-regulated reference meiosis and syngamy related genes:
 
-````
+fig
 
-````
 
-````
 
-* Graphical outputs:
-scRNA_GenExpr.Rmd
+## 2. Comparative approach
 
+### 2.1 Create clusters of orthologous proteins:
 
+Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
 
-### 4. Orthofinder: 
+*Input data: all life stage single-cell trancriptomes
+*Output data: orthofinder folders (check manual on git page above)
 
-As the nodes of different transcriptomes are combined together in the analysis, the transcriptome/individual id should by added to the node id.
-The transcriptomes to be compared are located in the fasta files directory.
+Scripts: 
 
-````
-# Load module
-module load orthofinder/2.5.2
 
-# Command
-orthofinder -f fasta_files_directory
-````
+### 2.2 Identify life stage specific protein families:
 
-Orthofinder creates a well-structured output with a lot of subfiles and statistics. The first part of graphical analysis script scRNA_OrthoF.Rmd runs on the Comparative_statistics table. The second part of the graphics is generated by extracting from the output only the clusters (OGs) related to sexual reproduction; i.e. containing a gene identified by HMMER (c.f. approach 1) as a match to one of reference protist genes involved in the sexual cycle (sexCy genes). 
+Tools: bash, R
 
-The following script generates statistics relative to the sexual cycle related OGs (sexCy OGs):
+*Input data: 
+*Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
 
-````
-## Get a list of OGs containing each sexual cycle related node and the number of OG 
-# Create ref file with nodes sample ids retrieved from HMMER
+Scripts:
 
-# Swarmer and meiosis data
-cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/node_query_score_hits.csv | awk -F";" '$2=="H" {print $3"_"$1}' | awk -F"_length" '{print $1}' | awk -F"_" '{print $4"_"$1$2$3"_"$5"_"}' > Ref_node_list_2507.csv
 
-# Cyst data & merge
-cut -d";" -f1,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$2=="H" {print $3"_"$1}' | awk -F"_length" '{print $1}' | awk -F"_" '{print $4"_"$1$2$3"_"$5"_"}' >> Ref_node_list_2507.csv
+### 2.3 Select most up/down-regulated protein families for each life stage:
 
-# Vegetative stage & merge
-cut -d";" -f1,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | awk -F";" '$2 ~/amphil/ {gsub ("Gene.","Gene_Amel_",$1); print $1} ; \
-$2 ~/Actin/ {gsub ("TRINITY_","TRINITY_Acpr_",$1); print $1} ; $2 ~/sticho/ {gsub ("TRINITY_","TRINITY_Stza_",$1); print $1}' | awk -F"_" '$2=="Amel" || $2=="Acpr" || $2=="Stza" {print$0}' | sed 's/:/_/g'  >> Ref_node_list_2507.csv
+Tools: R
 
-grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Orthogroup_Sequences/*.fa > OG_sexCy_nodes.txt
-grep -f /shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/Ref_node_list_2507.csv Single_Copy_Orthologue_Sequences/*.fa > OG_single_sexCy_nodes.txt
+*Input data: TPM_abund.tsv, 
+*Output data: barplot of gene expression + list of OG enriched by life stage
 
-# Count nb of OGs containing at least one reference gene
-cut -d'/' -f2 OG_sexCy_nodes.txt | cut -d':' -f1 | sort | uniq > OG_ref.csv
-wc -l OG_ref.csv
-
-cut -d'/' -f2 OG_single_sexCy_nodes.txt | cut -d':' -f1 | sort | uniq > OG_single_ref.csv
-wc -l OG_single_ref.csv
-
-# Move OGs containing ref genes in a separate folder
-mkdir OG_ref
-rsync -a Orthogroup_Sequences/ --files-from=/shared/projects/swarmer_radiolaria/finalresult/ortholog/Acantharia/OrthoFinder/Results_Jul25/OG_ref.csv OG_ref/
-ls | wc -l
-
-rsync -a OrthoFinder/Results_Feb13/Single_Copy_Orthologue_Sequences/ --files-from=/shared/projects/swarmer_radiolaria/finalresult/ortholog/OG_single_ref.csv /shared/projects/swarmer_radiolaria/finalresult/ortholog/OG_ref/
-ls | wc -l
-
-## Get the size of the OG containing the node that blasted with the reference HMM profile (sexCy node)
-grep -c ">" OG_ref/*.fa | sed 's/.fa:/,/g' | sed '1 i OG,Size' | sed 's#OG_ref/##g' > OG_ref_size.csv
-
-## Count nb of sequences from each species in each sexCy OG
-grep -c "A1ViSW" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A1ViSW' > OG_ref_nodes_A1ViSW.csv
-grep -c "A2ViSW" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A2ViSW' > OG_ref_nodes_A2ViSW.csv
-grep -c "A3ViSW" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A3ViSW' > OG_ref_nodes_A3ViSW.csv
-grep -c "A4ViCY" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A4ViCY' > OG_ref_nodes_A4ViCY.csv
-grep -c "A2ViCY" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_A2ViCY' > OG_ref_nodes_A4ViCY.csv
-grep -c "Gene_Amel_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Amel' > OG_ref_nodes_Amel.csv
-grep -c "__TRINITY_Acpr_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Acpr' > OG_ref_nodes_Acpr.csv
-grep -c "__TRINITY_Stza_" OG_ref/*.fa | awk -F ":" '{print $2}' | sed '1 i Nodes_Stza' > OG_ref_nodes_Stza.csv
-
-# Merge all species in one file
-paste OG_ref_size.csv OG_ref_nodes*.csv -d"," > OG_ref_size_nodes_sp.csv
-
-# Create reference file with sexCy nodes, sample ids and protein ids to be combined with sexCy OG ids
-# Swarmer and meiosis data
-cut -d";" -f1,2,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/swarmer/graphics/node_query_score_hits.csv | awk -F";" '$3=="H" {print $2","$4","$1}' | awk -F"_length" '{print $1}' | awk -F"," '{OFS = FS} {gsub ("_","",$2); print $0}' | awk -F",NODE" '{print $1$2$3}' | sed '1iProtein,Node' > Ref_pr_list_2707.csv
-
-# Cyst data & merge
-cut -d";" -f1,2,12,13 /shared/projects/swarmer_radiolaria/finalresult/HMM/cyst/graphics/node_query_score_hits.csv | awk -F";" '$3=="H" {print $2","$4","$1}' | awk -F"_length" '{print $1}' | awk -F"," '{OFS = FS} {gsub ("_","",$2); print $0}' | awk -F",NODE" '{print $1$2$3}' >> Ref_pr_list_2707.csv
-
-# Vegetative stage data & merge
-cut -d";" -f1,2,12 /shared/projects/swarmer_radiolaria/finalresult/HMM/adult/graphics/node_query_score_hits.csv | 
- awk -F";" '$3 ~/amphil/ {gsub("Gene.","Amel_",$1); print $1";"$2} ; $3 ~/sticho/ {gsub("TRINITY_","Stza_",$1); print $1";"$2} ; $3 ~/Actin/ {gsub("TRINITY_","Acpr_",$1); print $1";"$2}' | awk -F"_" '$1=="Amel" || $1=="Acpr" || $1=="Stza" {print$0}' | awk -F";" '{print$2","$1}' | awk -F"_c" '{print$1}' | awk -F"::" '{print$1}' >> Ref_pr_list_2707.csv
-
-# Create reference file with sexCy OG id and sample id
-awk -F"/" '{print$2}' OG_sexCy_nodes.txt | awk -F"_" '{print$1","$2"_"$3}' | sed 's/.fa:>NODE//g' | sed '1iOG,Node' > OG_sexCy_nodes_sp.csv
-````
-
-
-### 5. Phylogenetic reconstructions: 
-
-#### Species Tree
-Recovery of rRNA sequences in transcriptomes:
-
-````
-#!/bin/bash
-#SBATCH --job-name rrna_recovery
-#SBATCH --cpus-per-task=2
-#SBATCH -o o.rrna
-#SBATCH -e e.rrna
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
-#SBATCH --mail-type=BEGIN,FAIL,END
-
-# For every eukaryotic fasta file
-for f in /shared/projects/swarmer_radiolaria/finalresult/rrna/*euk*.fasta;
-do
-   echo "looping 1 "${f##*/}""
-   id=${f##*/}
-   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "18S_rRNA" | sed 's/.fasta/\n/g' >> 18S_rRNA.fasta
-   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "28S_rRNA" | sed 's/.fasta/\n/g' >> 28S_rRNA.fasta
-   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "5_8S_rRNA" | sed 's/.fasta/\n/g' >> 5_8S_rRNA.fasta
-   sed "s/)/)$id/g" ${f} | tr -d "\n" | sed 's/>/\n>/g' | grep "5S_rRNA" | sed 's/.fasta/\n/g' >> 5_8S_rRNA.fasta
-done
-##
-
-````
-
-Identify the dominant form of ribosomal transcript in the cell according to gene expression:
-
-````
-# Create files with 18S and 28S nodes headers
-sed 's/)/:/g' 18S_rRNA.fasta | awk -F":" '/^>/ {print $3","$5}'  | sed 's/_euk_//g' | sed 's/rRNA//g' | sed 's/rrna//g' | sed '1inode,sample' > ../plots/18S_rRNA_nodes.csv
-sed 's/)/:/g' 28S_rRNA.fasta | awk -F":" '/^>/ {print $3","$5}'  | sed 's/_euk_//g' | sed 's/rRNA//g' | sed 's/rrna//g' | sed '1inode,sample' > ../plots/28S_rRNA_nodes.csv
-````
-
-Node headers and node expression data are merged in Rstudio (part of scRNA_GenExpr.Rmd script), detail below:
-
-````
-## Rstudio
-# Gene expression file
-quants_id_final_A <- read.csv("Global_quant_file_Acantharia_030823.csv",sep=",",stringsAsFactors = T)
-quants_id_final_C <- read.csv("Global_quant_file_Collodaria_030823.csv",sep=",",stringsAsFactors = T)
-quants_id_final_F <- read.csv("Global_quant_file_Foraminifera_030823.csv",sep=",",stringsAsFactors = T)
-quants_id_final <- rbind(quants_id_final_A,quants_id_final_C,quants_id_final_F)
-
-# 18S node ids 
-nodes <- read.csv("18S_rRNA_nodes.csv",sep=",",stringsAsFactors = T)
-
-# 28S node ids 
-nodes_2 <- read.csv("28S_rRNA_nodes.csv",sep=",",stringsAsFactors = T)
-
-## Following lines are used either with nodes or nodes_2 file, the example below applies to nodes:
-# Merge tables
-nodes_expr <- merge(nodes, quants_id_final, by="node", all.x=T)
+Scripts:
 
-# Separate short node id
-nodes_expr2 <- cbind(str_split_fixed(nodes_expr$node,"_length_",2), nodes_expr)
-colnames(nodes_expr2)[1] <- "simple_id"
-colnames(nodes_expr2)[2] <- "detail_id"
 
-# Set order of samples
-nodes_expr2$sample.y <- factor(nodes_expr2$sample.y, levels=c("A1ViSW", "A2ViSW", "A3ViSW", "A2ViCY","A4ViCY", "A5ViME","C1MoSW","FiMoMESW","F2MoME"))
+### 2.4 Annotation of most up/down-regulated protein families for each life stage:
 
-# Plot x=nodes and y=expression level
-ggplot(nodes_expr2, aes(x=sample.y, y=tpm_global)) +
-  geom_point(aes(color=sample.y), alpha=0.5, size=3) +
-  geom_hline(aes(yintercept=av_expr, color=sample.y), linetype="dashed", size=0.5) +
-  geom_text(aes(label=simple_id), position=position_dodge(width=2), vjust=-1) +
-  facet_nested(cols=vars(group,sample.y), scales = "free", space = "free") +
-  theme_classic() +
-  theme(axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +      
-  labs(x="Sample", y="Normalised gene expression (TPM)", color="Sample") +
-  ggtitle("18S copies relative expression") +
-  theme(plot.title = element_text(face="bold"))
-````
-Based on the output of Rstudio, the node headers are here selected manually due to the low number of samples and saved in separated 18S and 28S files.
-These will be the input files for phylogenetic reconstruction.
+Tools: blastp, InterPro, MyCLADE, Phyre2
 
-````
-# Select 18S copies that are most abundant in relative expression when multiple
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_13_length_3765_cov_55556.817714_g9_i0" | sed 's/_euk_rRNA/\n/g' > 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_185_length_3420_cov_635.543771_g11_i1" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_505_length_1621_cov_3355.087855_g279_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_544_length_1899_cov_7786.025739_g172_i0" | sed 's/_euk_hf45/_hf45\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_2331_length_1873_cov_2256.565556_g1386_i1" | sed 's/_euk_hf46/_hf46\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_871_length_1820_cov_3097.453349_g328_i1" | sed 's/_euk_hf44/_hf44\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_8594_length_3132_cov_4907.534815_g5996_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
-tr -d "\n" < 18S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_845_length_1881_cov_4.923119_g778_i0" | sed 's/_euk_rRNA/\n/g' >> 18S_rRNA_filtExpr.fasta
+*Input data: protein sequences of each protein family
+*Output data: table of annotations
 
-# Select 18S copies that are most abundant in relative expression when multiple
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_13_length_3765_cov_55556.817714_g9_i0" | sed 's/_euk_rRNA/\n/g' > 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_90_length_3266_cov_8943.846852_g16_i3" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_697_length_2048_cov_559.458734_g11_i2" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_748_length_1688_cov_5449.676161_g275_i0" | sed 's/_euk_hf45/_hf45\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_507_length_3165_cov_6478.737387_g254_i3" | sed 's/_euk_hf46/_hf46\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_704_length_1938_cov_24186.071850_g236_i1" | sed 's/_euk_hf44/_hf44\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_578_length_2200_cov_15.303244_g527_i0" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
-tr -d "\n" < 28S_rRNA.fasta | sed 's/>/\n>/g' | grep "NODE_9863_length_2961_cov_13963.394044_g6944_i0" | sed 's/_euk_rRNA/\n/g' >> 28S_rRNA_filtExpr.fasta
-````
+Scripts: manual search
 
-Multiple Sequence Alignment (MSA) using MAFFT with an algorithm adapted to sequences with similar lengths and belonging to closely related groups.
 
-````
-# Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
+## Summary flowchart
 
-module load mafft/7.515
 
-mafft --maxiterate 1000 --globalpair  ${file} > "aligned_"${file}
+# How to navigate this git ?
 
-````
 
-MSA trimming with Trimmal, 70% of sequences allowed with gaps.
+# Perspectives
 
-````
-module load trimal/1.4.1  
 
-trimal -in aligned_${file} -out "aligned_trimmed_"${file} -gt 0.3
-````
-
-Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model GTR+G for nucleotides.
-
-````
-module load raxml-ng/1.1.0
-
-# Step 1 ~ check: check that the MSA is compatible with raxML 
-raxml-ng --check --msa-format FASTA --msa seq_aligned_trim.fasta --model GTR+G --prefix T1
-
-# Information about duplicate sequences, nb of sites and proportion of gaps and invariant sites is printed
-
-# Step 2 ~ parse: estimate the optimal parameters (memory, nb threads) for calculating the phylogeny with the given data
-raxml-ng --parse --msa T1.raxml.phy --model GTR+G --prefix T2
-
-# Step 3 ~ phylogeny: the default nb of starting trees is 20, 10 random + 10 parsimony
-raxml-ng --msa T1.raxml.phy --model GTR+G --prefix T3 --seed $RANDOM --threads 6
-
-# To gain in time the nb of starting trees can be set manually:
-raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model GTR+G --prefix T3_hapOGA --seed $RANDOM --threads 4 --workers 10 --tree "pars{2},rand{2}" 
-
-# Step 4 ~ multiple best topologies in tree space? Ideally, one topology is the best.
-raxml-ng --rfdist --tree T3.raxml.mlTrees --prefix T4_RF
-
-# Step 5 ~ bootstrap (BS): test the robustness of the best ML tree by randomnly modifying the MSA
-raxml-ng --bootstrap --msa T1.raxml.phy --model GTR+G --prefix T5 --seed 2 --threads 6 --bs-trees 100
-
-# Step 6 ~ add BS values: add bootstrap support values on the best ML tree
-raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
-
-# ONE-STEP command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
-raxml-ng --all --msa pT1.raxml.phy --model GTR+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp --bs-trees 100
-````
-
-
-
-#### Gene Trees
-
-Multiple Sequence Alignment (MSA) using MAFFT with the E-INS-i algortithm optimised for sequences with multiple conserved domains.
-
-````
-# Alignment, --maxiterate options is recommended for < 200 seq with < 2,000 positions
-
-mafft --maxiterate 1000 --genafpair --thread 6 seq.fasta > seq_aligned.fasta
-````
-
-MSA trimming with Trimmal, 70% of sequences allowed with gaps.
-
-````
-module load trimal/1.4.1  
-
-trimal -in seq_aligned.fasta -out seq_aligned_trim.fasta -gt 0.3
-````
-
-Maximum Likelihood (ML) phylogenetic recostruction using raxML-ng, evolutionary model JTT+G for proteins.
-
-````
-module load raxml-ng/1.1.0
-
-# Step 1 ~ check: check that the MSA is compatible with raxML 
-raxml-ng --check --msa-format FASTA --msa seq_aligned_trim.fasta --model JTT+G --prefix T1
-
-# Information about duplicate sequences, nb of sites and proportion of gaps and invariant sites is printed
-
-# Step 2 ~ parse: estimate the optimal parameters (memory, nb threads) for calculating the phylogeny with the given data
-raxml-ng --parse --msa T1.raxml.phy --model JTT+G --prefix T2
-
-# Step 3 ~ phylogeny: the default nb of starting trees is 20, 10 random + 10 parsimony
-raxml-ng --msa T1.raxml.phy --model JTT+G --prefix T3 --seed $RANDOM --threads 6
-
-# To gain in time the nb of starting trees can be set manually:
-raxml-ng --msa T1_hapOGA.raxml.reduced.phy --model JTT+G --prefix T3_hapOGA --seed $RANDOM --threads 4 --workers 10 --tree "pars{2},rand{2}" 
-
-# Step 4 ~ multiple best topologies in tree space? Ideally, one topology is the best.
-raxml-ng --rfdist --tree T3.raxml.mlTrees --prefix T4_RF
-
-# Step 5 ~ bootstrap (BS): test the robustness of the best ML tree by randomnly modifying the MSA
-raxml-ng --bootstrap --msa T1.raxml.phy --model JTT+G --prefix T5 --seed 2 --threads 6 --bs-trees 100
-
-# Step 6 ~ add BS values: add bootstrap support values on the best ML tree
-raxml-ng --support --tree T3.raxml.bestTree --bs-trees T4.raxml.bootstrap --prefix T6
-
-# ONE-STEP command: tree inference and bootstrapping, i.e. steps 3, 5 and 6
-raxml-ng --all --msa pT1.raxml.phy --model JTT+G --prefix All --seed $RANDOM --threads 8 --extra thread-pin --bs-metric fbp --bs-trees 100
-
-````
-
-
-
-
-
-
-
-## Next steps
-
-Building a phylogenetic tree of identified genes and validating radiolarian specific marker genes of the sexual cycle (SexCy markers). 
