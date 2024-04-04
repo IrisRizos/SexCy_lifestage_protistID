@@ -7,7 +7,7 @@
 
 2. Parse orthofinder output to organise data by life stage: parse_OGs.sh
 
-3. Graphical visualisation: scRNA_Acacnth.Rmd, suppl.Rmd (cf. homepage)
+3. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
 
 
