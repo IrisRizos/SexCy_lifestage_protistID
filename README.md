@@ -113,8 +113,8 @@ fig
 
 Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
 
-*Input data: all life stage single-cell trancriptomes
-*Output data: orthofinder folders (check manual on git page above)
+* Input data: all life stage single-cell trancriptomes
+* Output data: orthofinder folders (check manual on git page above)
 
 Scripts: 
 
@@ -123,8 +123,8 @@ Scripts:
 
 Tools: bash, R
 
-*Input data: 
-*Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
+* Input data: 
+* Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
 
 Scripts:
 
@@ -133,8 +133,8 @@ Scripts:
 
 Tools: R
 
-*Input data: TPM_abund.tsv, 
-*Output data: barplot of gene expression + list of OG enriched by life stage
+* Input data: TPM_abund.tsv, 
+* Output data: barplot of gene expression + list of OG enriched by life stage
 
 Scripts:
 
@@ -143,8 +143,8 @@ Scripts:
 
 Tools: blastp, InterPro, MyCLADE, Phyre2
 
-*Input data: protein sequences of each protein family
-*Output data: table of annotations
+* Input data: protein sequences of each protein family
+* Output data: table of annotations
 
 Scripts: manual search
 
@@ -153,9 +153,16 @@ Scripts: manual search
 
 ![Graphical](Flowchart_CH2.svg)
 
+
 # How to navigate this git ?
+
+Each step followed in the section *Method* has an equivalent folder in which the input/output data and scripts are available! In case the input data is the output data of the previous step, files are uploaded once, in the folder corresponding to the step they were generated. The list of steps and flowchart above will guide you to the right folder.
 
 
 # Perspectives
+
+It seems like Acantharia are capable of sexual reproduction, what if other uncultivated protists too? 
+
+Feel free to apply and re-adapt the method provided here to your own uncultivated life stages! 
 
 
