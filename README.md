@@ -148,6 +148,7 @@ Scripts: manual search
 
 ## Summary flowchart
 
+![Graphical](Flowchart_CH2.svg)
 
 # How to navigate this git ?
 
