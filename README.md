@@ -36,12 +36,15 @@ The expression of gamete reference genes is investigated among 4 single-cell swa
 
 -Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
 
+
 Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
 
 
 *Vegetative swarming*: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
 
 Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species.
+
+
 
 
 *Cyst swarming*: the cell forms a dense and opaque round-shaped structure from which swarmer emerge either through a pore or the periphery of the cyst
@@ -59,16 +62,16 @@ Both the expression of meiosis and gamete reference genes is investigated as the
 
 Tools: EggNog, Salmon, Kallisto
 
-*Input: predicted protein sequences (.pep file)
-*Output: annotations.tsv, abundance.tsv
+* Input: predicted protein sequences (.pep file)
+* Output: annotations.tsv, abundance.tsv
 
 
 ### 1.2 Multivariate analysis: 
 
 Tools: R
 
-*Input: annotations.tsv, abundance.tsv
-*Output: NMDS, heatmap
+* Input: annotations.tsv, abundance.tsv
+* Output: NMDS, heatmap
 
 
 ### 1.3 Phylogenetic placement of single-cells: 
