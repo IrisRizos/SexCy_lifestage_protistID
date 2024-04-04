@@ -5,9 +5,21 @@
 
 1. Search for list of downloaded HMM profiles: HMM_search.sh
 
+
 2. Create and search for lineage specific HMM profiles:
 
+
+
 3. Parse HMM search outputs: hmm_fasta_convert_SW.sh, hmm_graphics.sh
+
+Transcripts blasting with query domains were recovered in fasta files: hmm_fasta_convert_{lifestage}.sh
+
+The script allows to convert alignements in stockholm format to fasta file. For that the use of easel miniapps implemented in HMMER is necessary (http://cryptogenomicon.org/extracting-hmmer-results-to-sequence-files-easel-miniapplications.html). 
+
+The first bash script also allows to recover the predicted number of proteins for each transcriptome. The second bash script (hmm_graphics.sh) recovers quality information relative to the hmm profile alignments and combines it with the output of the previous script. The final file of this script node_count_query_score_hits.csv, is the input for graphical representations.
+
+Both scripts are run by life stage and are here applied to swarmer and meiosis transcriptome data, as an example.
+
 
 4. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
