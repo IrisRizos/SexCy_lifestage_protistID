@@ -30,11 +30,11 @@ A two-step approach was employed for describing the functional profiles of each 
 
 The radiolarian life stages studied here are:
 
--Swarmer: hypothetical gamete stage 
+* Swarmer: hypothetical gamete stage 
 The expression of gamete reference genes is investigated among 4 single-cell swarmer transcriptomes of 3 acantharian and 1 collodarian species.
 
 
--Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
+* Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
 
 
 Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
