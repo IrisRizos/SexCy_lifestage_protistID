@@ -12,7 +12,7 @@ The second bash script (hmm_graphics.sh) recovers quality information relative t
 Both scripts are run by life stage and are here applied to swarmer and meiosis transcriptome data, as an example.
 
 
-2. Create, search for lineage specific HMM profiles and parse: HMM_build.sh, HMM_search_linsp.sh
+2. Create, search for lineage specific HMM profiles and parse: HMM_build.sh, HMM_search_linsp.sh, HMM_graphics_linsp.sh
 
 
 
