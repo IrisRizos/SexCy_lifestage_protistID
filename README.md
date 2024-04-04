@@ -51,7 +51,7 @@ Samples include 2 acantharian species among which one also undergone vegetative 
 Both the expression of meiosis and gamete reference genes is investigated as the presence of swarmers inside the cell is suspected.
 
 
-![Graphical](Lifecyle.png)
+![Graphical](Lifecycle.png)
 
 ## Preliminary analysis
 
