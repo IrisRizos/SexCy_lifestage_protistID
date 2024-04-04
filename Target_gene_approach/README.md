@@ -3,11 +3,11 @@
 
 ### Scripts:
 
-1. Search for list of downloaded HMM profiles:
+1. Search for list of downloaded HMM profiles: HMM_search.sh
 
 2. Create and search for lineage specific HMM profiles:
 
-3. Parse HMM search outputs:
+3. Parse HMM search outputs: hmm_fasta_convert_SW.sh, hmm_graphics.sh
 
 4. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
