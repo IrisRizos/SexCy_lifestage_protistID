@@ -6,7 +6,8 @@
 1. Search for list of downloaded HMM profiles: HMM_search.sh
 
 
-2. Create and search for lineage specific HMM profiles:
+
+2. Create and search for lineage specific HMM profiles: HMM_build.sh, HMM_search.sh
 
 
 
