@@ -27,13 +27,11 @@ Input of step 1.: (cf. )
 
 ### Graphics:
 
-* Fig3 A: venn
-
-* Fig3 B: barplot selected OG
+* Fig3: venn diagram and gene expression barplot of selected OGs
 
 * FigSX: chord diagram reprod stages
 
-* FigSX: treemaps with annot
+* FigSX: treemaps with annot --> to do
 
 * FigSX: barplot all OGs
 
