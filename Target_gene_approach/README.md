@@ -7,7 +7,7 @@
 
 
 
-2. Create and search for lineage specific HMM profiles: HMM_build.sh, HMM_search.sh
+2. Create and search for lineage specific HMM profiles: HMM_build.sh, HMM_search_linsp.sh
 
 
 
