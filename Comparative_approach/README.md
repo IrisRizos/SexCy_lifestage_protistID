@@ -19,9 +19,9 @@ Input of step 1.: (cf. )
 
 ### Dataframes:
 
-* Input of step 2.: Orthogroups.GeneCount.tsv, 
+* Input of step 2.: Orthogroups.GeneCount.tsv 
 
-* Input of step 3.: 
+* Input of step 3.: Orthogroups.GeneCount.tsv, SW_node_OG.csv, SWb_node_OG.csv, CY_node_OG.csv, VE_node_OG.csv, Reprod_node_OG.csv, SW_VE_node_OG.csv, CY_VE_node_OG.csv, SWb_VE_node_OG.csv, All_node_OG.csv, Orthogroups_SpeciesOverlaps.tsv (Supplementary)
 
 
 
