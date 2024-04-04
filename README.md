@@ -332,13 +332,44 @@ Calculate genes trees and compare to species tree.
 
 ### 2. Comparative approach
 
-#### 2.1 Creating clusters of ortholog genes:
-Orthofinder
+#### 2.1 Create clusters of orthologous proteins:
+
+Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
+
+*Input data: all life stage single-cell trancriptomes
+*Output data: orthofinder folders (check manual on git page above)
+
+Scripts: 
 
 
-#### 2.2 Phylogenetic relationships of sexual genes:
-Are the gene trees and species tree congruent ?
+#### 2.2 Identify life stage specific protein families:
 
+Tools: bash, R
+
+*Input data: 
+*Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
+
+Scripts:
+
+
+#### 2.3 Select most up/down-regulated protein families for each life stage:
+
+Tools: R
+
+*Input data: TPM_abund.tsv, 
+*Output data: barplot of gene expression + list of OG enriched by life stage
+
+Scripts:
+
+
+#### 2.4 Annotation of most up/down-regulated protein families for each life stage:
+
+Tools: blastp, InterPro, MyCLADE, Phyre2
+
+*Input data: protein sequences of each protein family
+*Output data: table of annotations
+
+Scripts: manual search
 
 
 ## Reference protist genes
