@@ -60,7 +60,9 @@ Both the expression of meiosis and gamete reference genes is investigated as the
 
 ### 1.1 Functional annotation & differential expression: 
 
-Tools: EggNog, Salmon, Kallisto
+Tools: EggNog (http://eggnog6.embl.de/#/app/results?seqid=Q5D892&target_nogs=KOG0952), Salmon (https://salmon.readthedocs.io/en/latest/salmon.html), Kallisto (https://pachterlab.github.io/kallisto/about.html)
+
+*the tools were run on command line, versions are noted in corresponding scripts*
 
 * Input: predicted protein sequences (.pep file)
 * Output: annotations.tsv, abundance.tsv
