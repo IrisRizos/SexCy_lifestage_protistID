@@ -31,3 +31,5 @@ Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
 * Fig1D: heatmap of COG expression in reproductive stages compared to vegetative
 
 * FigSX: NMDS only Acantharia
+
+* FigSX: expression of 18S and 28S
