@@ -36,3 +36,5 @@ Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
 * FigSX: NMDS only Acantharia
 
 * FigSX: expression of 18S and 28S
+
+![Graphical](
