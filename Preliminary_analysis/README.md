@@ -11,18 +11,21 @@
 4. Phylogenetic reconstruction based on 18S-28S
 
 
-### Single-cell transcriptomes and predicted proteomes:
+### Single-cell transcriptomes and predicted proteomes (biological data):
 
 Input of step 1.: transcriptomes (cf. Data)
 
 Input of step 2.: proteomes (cf. Data)
+
+
+### Dataframes (computational data): 
 
 Input of step 3.: annotations.tsv, quants.csv
 
 Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
 
 
-### Dataframes:
+### Figures:
 
 * Fig1B: phylogeny
 
