@@ -37,4 +37,7 @@ Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
 
 * FigSX: expression of 18S and 28S
 
+
+### Flowchart:
+
 ![Graphical](Flowchart_prelim.png)
