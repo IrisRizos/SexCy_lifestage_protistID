@@ -8,6 +8,8 @@
 
 3. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
+4. Phylogenetic reconstruction based on 18S-28S
+
 
 ### Single-cell transcriptomes and predicted proteomes:
 
@@ -15,11 +17,17 @@ Input of step 1.: transcriptomes (cf. Data)
 
 Input of step 2.: proteomes (cf. Data)
 
+Input of step 3.: annotations.tsv, quants.csv
+
+Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
+
 
 ### Dataframes:
 
-* Fig3C: NMDS based on COG differential expression
+* Fig1B: phylogeny
 
-* Fig3D: heatmap of COG expression in reproductive stages compared to vegetative
+* Fig1C: NMDS based on COG differential expression
+
+* Fig1D: heatmap of COG expression in reproductive stages compared to vegetative
 
 * FigSX: NMDS only Acantharia
