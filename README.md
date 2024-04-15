@@ -30,11 +30,14 @@ A two-step approach was employed for describing the functional profiles of each 
 
 The radiolarian life stages studied here are:
 
+* Vegetative: stage at which the cell feeds and arrives at maturity for reproduction
+The vegetative Acantharian cells studied are used as references (negative control) compared to sexual cycle life stages and include 2 non-symbiotic vegetative cells and 2 photosymbiotic vegetative cells
+
 * Swarmer: hypothetical gamete stage 
-The expression of gamete reference genes is investigated among 4 single-cell swarmer transcriptomes of 3 acantharian and 1 collodarian species.
+The expression of gamete reference genes is investigated among 3 single-cell swarmer transcriptomes of 3 Acantharia. One foraminiferan swarmer transcriptome is included as sexual cycle reference (positive control).
 
 
-* Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape and granulosity of the cell 
+* Meiosis: stage before swarmer release, morphologically identifiable by a change of color, size, shape of the cell and cytoplasm texture 
 
 
 Two types of meiosis stages are supposed to apply to Radiolaria according to the modality of swarmer release:
@@ -42,7 +45,7 @@ Two types of meiosis stages are supposed to apply to Radiolaria according to the
 
 *Vegetative swarming*: the overall shape of the cell remains the same while swarmers emerge from the cytoplasm
 
-Samples include 1 acantharian, 1 spumellarian and 1 foraminiferan species.
+Samples include 1 acantharian and 1 foraminiferan species.
 
 
 
@@ -78,7 +81,10 @@ Tools: R
 
 ### 1.3 Phylogenetic placement of single-cells: 
 
+Tools: Barrnap, R, MAFFT, Trimal, RaxML-ng
 
+* Input: transcripts.fasta, annotations.tsv, abundance.tsv
+* Output: barcode copies relative expression, maximum likelihood phylogeny
 
 
 ## 1. Target-gene approach
@@ -96,17 +102,26 @@ among which 11 meiosis specific = REC8, HOP1, SPO22, PCH2, SPO11, HOP2, MND1, DM
 
 ### 1.2 HMM profile search: 
 
-The HMM profiles were downloaded from: 
+The HMM profiles were downloaded from: http://pfam.xfam.org 
+
+Tools: HMMER, R
+
+* Input: peptides.fasta, annotations.tsv, abundance.tsv
+* Output: heatmap of significantly aligned HMM profiles and expression
 
 
 ### 1.3 Creation of lineage specific HMM profiles: 
 
+Seed sequences of the meiosis and gamete specific genes were downloaded for the lineages: Alveolata, Archaeplastida, Stramemopiles from https://www.ebi.ac.uk/interpro/search/sequence/ 
+HMM profiles were created for each lineage and a manual significance threshold was calculated with a homemade R script.
+
+The supplementary hits recovered were added in the gloabl HMM profile graphical representation.
 
 
-### 1.4 Identification of up-regulated reference meiosis and syngamy related genes:
+Tools: HMMER, R
 
-fig
-
+* Input: peptides.fasta, abundance.tsv
+* Output: heatmap of significantly aligned HMM profiles and expression
 
 
 ## 2. Comparative approach
@@ -118,8 +133,6 @@ Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
 * Input data: all life stage single-cell trancriptomes
 * Output data: orthofinder folders (check manual on git page above)
 
-Scripts: 
-
 
 ### 2.2 Identify life stage specific protein families:
 
@@ -127,8 +140,6 @@ Tools: bash, R
 
 * Input data: 
 * Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
-
-Scripts:
 
 
 ### 2.3 Select most up/down-regulated protein families for each life stage:
@@ -138,8 +149,6 @@ Tools: R
 * Input data: TPM_abund.tsv, 
 * Output data: barplot of gene expression + list of OG enriched by life stage
 
-Scripts:
-
 
 ### 2.4 Annotation of most up/down-regulated protein families for each life stage:
 
@@ -147,8 +156,6 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 
 * Input data: protein sequences of each protein family
 * Output data: table of annotations
-
-Scripts: manual search
 
 
 ## Summary flowchart
