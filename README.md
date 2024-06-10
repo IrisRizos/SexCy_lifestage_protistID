@@ -169,6 +169,9 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 
 -Command-line tools:
 
+spades/3.15.5
+fastp/0.23.1 
+prinseq/0.20.4
 barrnap/0.9
 trinity/2.13.2
 eggnog-mapper/2.1.11
