@@ -166,7 +166,16 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 ## Tool versions
 
 ### 1. Background analysis
+Command-line tools:
 
+barrnap/0.9
+trinity/2.13.2
+eggnog-mapper/2.1.11
+mafft/7.515
+trimal/1.4.1
+raxml-ng/1.1.0
+
+R studio:
 
 
 ### 2. Target-gene approach
