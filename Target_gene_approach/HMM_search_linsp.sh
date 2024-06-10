@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name HMMER
 #SBATCH --cpus-per-task=4
-#SBATCH -o o.hmmsearch.%N.%j.1812
-#SBATCH -e e.hmmsearch.%N.%j.1812
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH -o o.hmmsearch.%N.%j
+#SBATCH -e e.hmmsearch.%N.%j
+#SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 
 # Load module
