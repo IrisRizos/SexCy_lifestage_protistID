@@ -2,9 +2,9 @@
 #
 #SBATCH --job-name bash
 #SBATCH --cpus-per-task=4
-#SBATCH -o o.hmmsearch.%N.%j.0902
-#SBATCH -e e.hmmsearch.%N.%j.0902
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH -o o.hmmsearch.%N.%j
+#SBATCH -e e.hmmsearch.%N.%j
+#SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 
 # Gather additional data of HMM output:
