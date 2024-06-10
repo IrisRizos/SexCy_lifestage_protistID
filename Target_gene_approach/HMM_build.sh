@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name HMMER
 #SBATCH --cpus-per-task=6
-#SBATCH -o o.hmmbuild.%N.%j.0902
-#SBATCH -e e.hmmbuild.%N.%j.0902
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH -o o.hmmbuild.%N.%j
+#SBATCH -e e.hmmbuild.%N.%j
+#SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 
 # Load modules
-module load mafft/
-module load hmmer/
+module load mafft/7.515
+module load hmmer/3.2.1
 
 for f in /shared/projects/swarmer_radiolaria/finalresult/HMM/Gamete_pr/GEX1_KAR5_IPR040346/*.fasta;
 do
@@ -19,3 +19,5 @@ do
    # Build HMM profile
    hmmbuild ${f##*/}.hmm ${f##*/}_aligned.sto
 done
+
+##
