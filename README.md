@@ -163,7 +163,7 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 ![Graphical](Flowchart_CH2.svg)
 
 
-## Package versions
+## Tool versions
 
 ### 1. Background analysis
 
