@@ -2,13 +2,13 @@
 #
 #SBATCH --job-name hmmsearch
 #SBATCH --cpus-per-task=4
-#SBATCH -o o.hmmS.%N.%j.1001
-#SBATCH -e e.hmmS.%N.%j.1001
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH -o o.hmmS.%N.%j
+#SBATCH -e e.hmmS.%N.%j
+#SBATCH --mail-user=
 #SBATCH --mail-type=BEGIN,FAIL,END
 
 # Load module
-module load hmmer/
+module load hmmer/3.2.1
 
 # Date of analysis
 today=$(date +%F)
