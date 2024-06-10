@@ -8,7 +8,7 @@
 
 3. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
-4. Phylogenetic reconstruction based on 18S-28S: phylogeny_AlignTrim.sh, phylogeny_raxML_ng_BS.sh, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
+4. Phylogenetic reconstruction based on 18S-28S: barnnap.sh, phylogeny_AlignTrim.sh, phylogeny_raxML_ng_BS.sh, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
 
 ### Single-cell transcriptomes and predicted proteomes (biological data):
