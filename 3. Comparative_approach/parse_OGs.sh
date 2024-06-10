@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name bash
 #SBATCH --cpus-per-task=6
-#SBATCH -o o.parse_OrthoF.%N.%j.2703
-#SBATCH -e e.parse_OrthoF.%N.%j.2703
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH -o o.parse_OrthoF.%N.%j
+#SBATCH -e e.parse_OrthoF.%N.%j
+#SBATCH --mail-user=
 #SBATCH --mail-type=ALL
 
 #~~# 1.Life stage specific gene counts #~~#
