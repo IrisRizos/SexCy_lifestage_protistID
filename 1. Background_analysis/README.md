@@ -2,13 +2,19 @@
 
 ### Scripts:
 
-1. Compute read remapping rates on assembled genes (proxy for gene expression): remap_expr.sh
+1. Single-cell transcriptome assembly:
 
-2. Functionnal annotations of predicted proteins: eggNOG_fun.sh
+2. Quality check:
 
-3. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
+3. Peptide prediction:
 
-4. Phylogenetic reconstruction based on 18S-28S: rrna_get.sh, phylogeny_AlignTrim.sh, phylogeny_raxML_ng_BS.sh, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
+4. Compute read remapping rates on assembled genes (proxy for gene expression): remap_expr.sh
+
+5. Functionnal annotations of predicted proteins: eggNOG_fun.sh
+
+6. Graphical visualisation: scRNA_paper_Acanth.Rmd, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
+
+7. Phylogenetic reconstruction based on 18S-28S: rrna_get.sh, phylogeny_AlignTrim.sh, phylogeny_raxML_ng_BS.sh, scRNA_paper_Acanth_suppl.Rmd (cf. homepage)
 
 
 ### Single-cell transcriptomes and predicted proteomes (biological data):
