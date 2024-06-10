@@ -9,6 +9,6 @@
 
 module load barrnap/0.9
 
-barrnap --kingdom 'euk' --threads '4' --outseq '[sample]_euk_rRNA.fasta' [file].cds
+barrnap --kingdom 'euk' --threads '4' --outseq '[sample]_euk_rRNA.fasta' [predicted protein file].cds
 
 ##
