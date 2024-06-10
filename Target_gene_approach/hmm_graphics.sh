@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-task=2
 #SBATCH -o o.bash2
 #SBATCH -e e.bash2
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-user=
 #SBATCH --mail-type=BEGIN,FAIL,END
 
 # Gather additional data of HMM output:
