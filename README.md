@@ -87,7 +87,7 @@ Tools: Barrnap, R, MAFFT, Trimal, RaxML-ng
 * Output: barcode copies relative expression, maximum likelihood phylogeny
 
 
-## 1. Target-gene approach
+## 2. Target-gene approach
 
 ### Reference protist genes
 
@@ -100,7 +100,7 @@ Meiosis related = 32 (cf. table X)
 among which 11 meiosis specific = REC8, HOP1, SPO22, PCH2, SPO11, HOP2, MND1, DMC1, MSH4, MSH5, MER3
 
 
-### 1.2 HMM profile search: 
+### 2.2 HMM profile search: 
 
 The HMM profiles were downloaded from: http://pfam.xfam.org 
 
@@ -110,7 +110,7 @@ Tools: HMMER, R
 * Output: heatmap of significantly aligned HMM profiles and expression
 
 
-### 1.3 Creation of lineage specific HMM profiles: 
+### 2.3 Creation of lineage specific HMM profiles: 
 
 Seed sequences of the meiosis and gamete specific genes were downloaded for the lineages: Alveolata, Archaeplastida, Stramemopiles from https://www.ebi.ac.uk/interpro/search/sequence/ 
 HMM profiles were created for each lineage and a manual significance threshold was calculated with a homemade R script.
@@ -124,9 +124,9 @@ Tools: HMMER, R
 * Output: heatmap of significantly aligned HMM profiles and expression
 
 
-## 2. Comparative approach
+## 3. Comparative approach
 
-### 2.1 Create clusters of orthologous proteins:
+### 3.1 Create clusters of orthologous proteins:
 
 Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
 
@@ -134,7 +134,7 @@ Tools: OrthoFinder, https://github.com/davidemms/OrthoFinder
 * Output data: orthofinder folders (check manual on git page above)
 
 
-### 2.2 Identify life stage specific protein families:
+### 3.2 Identify life stage specific protein families:
 
 Tools: bash, R
 
@@ -142,7 +142,7 @@ Tools: bash, R
 * Output data: visualisation of OG distribution among life stages with venn diagram, chord diagram 
 
 
-### 2.3 Select most up/down-regulated protein families for each life stage:
+### 3.3 Select most up/down-regulated protein families for each life stage:
 
 Tools: R
 
@@ -150,7 +150,7 @@ Tools: R
 * Output data: barplot of gene expression + list of OG enriched by life stage
 
 
-### 2.4 Annotation of most up/down-regulated protein families for each life stage:
+### 3.4 Annotation of most up/down-regulated protein families for each life stage:
 
 Tools: blastp, InterPro, MyCLADE, Phyre2
 
@@ -161,6 +161,20 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 ## Summary flowchart
 
 ![Graphical](Flowchart_CH2.svg)
+
+
+## Package versions
+
+### 1. Background analysis
+
+
+
+### 2. Target-gene approach
+
+
+
+### 3. Comparative approach
+
 
 
 # How to navigate this git ?
