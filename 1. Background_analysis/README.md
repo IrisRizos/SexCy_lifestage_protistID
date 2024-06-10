@@ -15,7 +15,7 @@
 
 Input of step 1.: transcriptomes (cf. Data)
 
-Input of step 2.: proteomes (cf. Data)
+Input of step 2.: predicted proteomes (cf. Data)
 
 
 ### Dataframes (computational data): 
