@@ -4,7 +4,7 @@
 #SBATCH --cpus-per-task=2
 #SBATCH -o o.hmm_convert
 #SBATCH -e e.hmm_convert
-#SBATCH --mail-user=iris.rizos@sb-roscoff.fr
+#SBATCH --mail-user=
 #SBATCH --mail-type=BEGIN,FAIL,END
 
 # Module
