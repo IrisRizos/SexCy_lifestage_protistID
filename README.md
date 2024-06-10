@@ -167,7 +167,7 @@ Tools: blastp, InterPro, MyCLADE, Phyre2
 
 ### 1. Background analysis
 
-Command-line tools:
+-Command-line tools:
 
 barrnap/0.9
 trinity/2.13.2
@@ -176,12 +176,12 @@ mafft/7.515
 trimal/1.4.1
 raxml-ng/1.1.0
 
-R studio:
+-R studio:
 
 
 ### 2. Target-gene approach
 
-Command-line tools:
+-Command-line tools:
 
 hmmer/3.2.1
 mafft/7.515
@@ -189,9 +189,15 @@ mafft/7.515
 
 ### 3. Comparative approach
 
-Command-line tools:
+-Command-line tools:
 
 orthofinder/2.5.2
+
+-R studio:
+
+
+-Online annotation tools:
+
 
 
 # How to navigate this git ?
