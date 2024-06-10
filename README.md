@@ -59,7 +59,7 @@ Both the expression of meiosis and gamete reference genes is investigated as the
 
 ![Graphical](Lifecycle.png)
 
-## Preliminary analysis
+## 1. Background analysis
 
 ### 1.1 Functional annotation & differential expression: 
 
