@@ -1,7 +1,3 @@
-Here are included raw data and scripts for processing them.
+Here is included the link to raw data.
 
-1. Single-cell transcriptome assembly
 
-2. Quality control
-
-3. Peptide prediction
