@@ -2,11 +2,11 @@
 
 ### Scripts:
 
-1. Single-cell transcriptome assembly:
+1. Initial read quality check: quality.sh
 
-2. Quality check:
+2. Single-cell transcriptome assembly: rrnaspade.sh
 
-3. Peptide prediction:
+3. Peptide prediction: transdec.sh
 
 4. Compute read remapping rates on assembled genes (proxy for gene expression): remap_expr.sh
 
