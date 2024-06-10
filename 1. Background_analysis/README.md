@@ -8,7 +8,7 @@
 
 3. Peptide prediction: transdec.sh
 
-4. Compute read remapping rates on assembled genes (proxy for gene expression): remap_expr.sh
+4. Compute read remapping rates on assembled genes (proxy for gene expression): remap_expr.sh (+kallisto ask Caro)
 
 5. Functionnal annotations of predicted proteins: eggNOG_fun.sh
 
