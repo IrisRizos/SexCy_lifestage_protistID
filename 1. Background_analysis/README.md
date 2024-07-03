@@ -30,6 +30,8 @@ Input of step 3.: annotations.tsv, quants.csv
 
 Input of step 4.: 18S.fasta, 28S.fasta, quants.csv
 
+Input of step 7.: V4_sc_ref_31seq_Acanth.fasta
+
 
 ### Figures:
 
