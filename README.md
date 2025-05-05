@@ -177,8 +177,6 @@ mafft/7.515
 trimal/1.4.1
 raxml-ng/1.1.0
 
--R studio:
-
 
 ### 2. Target-gene approach
 
@@ -193,12 +191,6 @@ mafft/7.515
 -Command-line tools:
 
 orthofinder/2.5.2
-
--R studio:
-
-
--Online annotation tools:
-
 
 
 # How to navigate this git ?
