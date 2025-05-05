@@ -10,7 +10,7 @@ The present github includes the code for identifying reference protist genes spe
 ![Graphical](Fig1_A.png)
 
 
-## Trascriptomic analyses reveal sexual cues in reproductive life stages of cunultivated Acantharia (Radiolaria)
+## Trascriptomic analyses reveal sexual cues in reproductive life stages of uncultivated Acantharia (Radiolaria)
 
 This code is associated to the publication of Rizos et al., 2025 in Protist (10.1016/j.protis.2025.126102).
 
