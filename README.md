@@ -65,7 +65,7 @@ Tools: EggNOG (http://eggnog6.embl.de/#/app/results?seqid=Q5D892&target_nogs=KOG
 
 *the tools were run on command line, versions are noted in corresponding scripts*
 
-* Input: EggNOG - predicted protein sequences (.pep file), Salmon/Kallisto - ?
+* Input: EggNOG - predicted protein sequences (.pep file), Salmon/Kallisto - quality-filtered transcripts (.fasta)
 * Output: annotations.tsv, abundance.tsv
 
 
