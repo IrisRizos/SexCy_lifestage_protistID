@@ -10,15 +10,13 @@ The present github includes the code for identifying reference protist genes spe
 ![Graphical](Fig1_A.png)
 
 
-## Genetic insight into the sexual cycle of Acantharia (Radiolaria)
+## Trascriptomic analyses reveal sexual cues in reproductive life stages of cunultivated Acantharia (Radiolaria)
 
-This code is associated to the publication of (authors) in (journal).
+This code is associated to the publication of Rizos et al., 2025 in Protist (10.1016/j.protis.2025.126102).
 
 ### Abstract
 
-As an innate property of life, the ability to self-reproduce is a key process for the perpetuation of all micro-organisms. Along the evolution of protist reproductive strategies, the molecular machinery of sexual reproduction is estimated to have been inherited from the last eukaryotic common ancestor (LECA). Nevertheless, among extant protist lineages, describing novel sexual cycles is laborious as the role of uncultivated life stages remains enigmatic. For the uncultivated planktonic group of Radiolaria, a hypothetical sexual cycle has been proposed since the late 19th century. Detailed observations and descriptions of Acantharia radiolarians, made by Schewiakoff and Haeckel, have converged to the description of a life cycle including the formation of a gamete-like life stage of unknown ploidy, called swarmers, that is produced either via the vegetative cell or a cyst. In order to elucidate the function of these uncultivated life stages, we have explored molecular signs of sexual reproduction in single-cell transcriptomics of multiple acantharian life stages. Overall, our data illustrates distinct functional profiles for reproductive and vegetative life stages, while highlighting reference eukaryotic genes involved in gamete fusion, like HAP2/GCS1 and GEX1-KAR5, and life stage specific orthologous protein groups (OGs). Differential expression analysis indicated 7 up-regulated OGs specific of swarmers and 1 up-regulated OG common between both swarmer and cyst life stages. The identified genes of interest feature the potential for developing life cycle markers for estimating the acantharian lifespan in the ocean. Approaching the acantharian reproductive cycle from a genetic point of view, allows a better comprehension of the cell biology and ecology of Radiolaria at a single-cell scale. 
-
-*Link to publication:*
+The ability to reproduce is a key process for the perpetuation of organisms. Along the evolution of protist reproductive strategies, the molecular machinery of sexual recombination is estimated to have been inherited from the last eukaryotic common ancestor (LECA). Unraveling the sexual cycles of free-living protists remains challenging, given the enigmatic roles of many uncultivated life stages. For the planktonic group of Acantharia (Radiolaria), a hypothetical sexual cycle has been proposed since the late 19th century, including a gamete-like stage, referred to as swarmers. In order to investigate the sexual nature of acantharian reproductive stages, we compared transcriptomes of various acantharian life stages. Our results show distinct functional profiles for reproductive and vegetative stages, while revealing the expression of the gamete fusion genes, HAP2/GCS1 and KAR5-GEX1-BMB in swarmers. Annotation of differentially expressed life stage-specific genes, also highlighted putative meiosis-related functions among pre-swarmer and swarmer stages, while suggesting the existence of a putative zygotic stage. This original life stage-specific genetic data is coherent with morphological evidence supporting the acantharian sexual cycle, with swarmers acting as gametes. Moreover, it paves the way for a deeper understanding of radiolarian cell biology and ecology at a single-cell scale.
 
 
 # Method
